@@ -30,26 +30,29 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		bool m_Crouching;
 
 
-		void Start()
+		public void Initialize()
 		{
 			m_Animator = GetComponent<Animator>();
 			m_Rigidbody = GetComponent<Rigidbody>();
-			m_Capsule = GetComponent<CapsuleCollider>();
+            m_Rigidbody.velocity = Vector3.zero;
+            m_Capsule = GetComponent<CapsuleCollider>();
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
+            m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+			m_OrigGroundCheckDistance = 1;
+            HandleAirborneMovement();
 
-			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-			m_OrigGroundCheckDistance = m_GroundCheckDistance;
-		}
+        }
 
 
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
-
+			//	Debug.Log(m_Rigidbody.velocity);
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
-			if (move.magnitude > 1f) move.Normalize();
+			//m_Rigidbody.velocity = Vector3.zero;
+            if (move.magnitude > 1f) move.Normalize();
 			move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
@@ -159,7 +162,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 			m_Rigidbody.AddForce(extraGravityForce);
 
-			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+			//Debug.Log(m_Rigidbody.velocity.y);
+			m_GroundCheckDistance = m_Rigidbody.velocity.y <= 0 ? m_OrigGroundCheckDistance : 0.01f;
 		}
 
 
