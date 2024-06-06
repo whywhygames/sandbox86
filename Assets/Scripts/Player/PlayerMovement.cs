@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
-using UnityStandardAssets.CrossPlatformInput;
+using TouchControlsKit;       
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Joystick _joystick;
-    [SerializeField] private Button _jumpButton;
+   // [SerializeField] private Joystick _joystick;
+   // [SerializeField] private Button _jumpButton;
     [SerializeField] private Transform _cam;
 
     private ThirdPersonCharacter _thirdPersonCharacter;
@@ -17,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _move;
     private bool _jump;
 
-    private void OnEnable()
+ /*   private void OnEnable()
     {
         _jumpButton.onClick.AddListener(Jump);
     }
@@ -25,13 +21,18 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         _jumpButton.onClick.RemoveListener(Jump);
-    }
+    }*/
 
     private void Update()
     {
         if (!_jump)
         {
             _jump = Input.GetButtonDown("Jump");
+        }
+
+        if (TCKInput.GetAction(InputParametrs.Jump, EActionEvent.Down))
+        {
+            Jump();
         }
     }
 
@@ -51,15 +52,17 @@ public class PlayerMovement : MonoBehaviour
         float h = 0;
         float v = 0;
 
+        Vector2 move = TCKInput.GetAxis(InputParametrs.Joystick);
+
         if (Input.GetAxis("Horizontal") != 0)
             h = Input.GetAxis("Horizontal");
-        else if (_joystick.Horizontal != 0)
-            h = _joystick.Horizontal;
+        else if (move.x != 0)
+            h = move.x;
 
         if (Input.GetAxis("Vertical") != 0)
             v = Input.GetAxis("Vertical");
-        else if (_joystick.Vertical != 0)
-            v = _joystick.Vertical;
+        else if (move.y != 0)
+            v = move.y;
 
         bool crouch = Input.GetKey(KeyCode.C);
 
