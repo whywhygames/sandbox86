@@ -2612,7 +2612,7 @@ MonoBehaviour:
   target: {fileID: 1569526724}
   offsetVector: {x: 0, y: 2.5, z: 0}
   cameraOffsetVector: {x: 1.08, y: 0, z: 0}
-  desiredDistance: 3
+  desiredDistance: 5
   collisionDistance: 0.2
   zoomOutStepValue: 1
   zoomOutStepValuePerFrame: 0.1
@@ -2687,7 +2687,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 80
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
