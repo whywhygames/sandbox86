@@ -4,24 +4,12 @@ using TouchControlsKit;
 
 public class PlayerMovement : MonoBehaviour
 {
-   // [SerializeField] private Joystick _joystick;
-   // [SerializeField] private Button _jumpButton;
     [SerializeField] private Transform _cam;
+    [SerializeField] private ThirdPersonCharacter _thirdPersonCharacter;
 
-    private ThirdPersonCharacter _thirdPersonCharacter;
     private Vector3 _camForward;
     private Vector3 _move;
     private bool _jump;
-
- /*   private void OnEnable()
-    {
-        _jumpButton.onClick.AddListener(Jump);
-    }
-
-    private void OnDisable()
-    {
-        _jumpButton.onClick.RemoveListener(Jump);
-    }*/
 
     private void Update()
     {

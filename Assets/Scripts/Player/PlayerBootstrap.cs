@@ -7,10 +7,11 @@ public class PlayerBootstrap : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private List<CharacterVariant> _characters;
-    [SerializeField] private CameraController _cameraController;
+    [SerializeField] private List<CharacterConfigure> _characters;
+    [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
+    [SerializeField] private Material _material;
 
-    private CharacterVariant _currentCharacter;
+    private CharacterConfigure _currentCharacter;
 
     private void Start()
     {
@@ -19,33 +20,27 @@ public class PlayerBootstrap : MonoBehaviour
 
     public void SetCharater(CharacterType characterType)
     {
-        Transform oldTransform = transform;
-
         if (_currentCharacter != null)
         {
             if (_currentCharacter.CharacterType == characterType)
             {
                 return;
             }
-
-            oldTransform = _currentCharacter.transform;
-            _currentCharacter.Deactivate();
-       }
+        }
 
         _currentCharacter = GetCharacter(characterType);
-        _currentCharacter.Activate(oldTransform);
-        _cameraController.target = _currentCharacter.transform;
 
-        _playerMovement.SetChatacter(_currentCharacter.ThirdPersonCharacter);
+        _skinnedMeshRenderer.sharedMesh = _currentCharacter.Mesh;
+        _material.mainTexture = _currentCharacter.Texture;
     }
 
-    private CharacterVariant GetCharacter(CharacterType characterType)
+    private CharacterConfigure GetCharacter(CharacterType characterType)
     {
-        foreach (CharacterVariant characterVariant in _characters)
+        foreach (CharacterConfigure characterConfigure in _characters)
         {
-            if (characterVariant.CharacterType == characterType)
+            if (characterConfigure.CharacterType == characterType)
             {
-                return characterVariant;
+                return characterConfigure;
             }
         }
 
