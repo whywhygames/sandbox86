@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             _move = v * Vector3.forward + h * Vector3.right;
         }
 
-        _thirdPersonCharacter.Move(_move, crouch, _jump);
+        //_thirdPersonCharacter.Move(_move, crouch, _jump);
         _jump = false;
     }
 

@@ -27,9 +27,12 @@ namespace ThirdPersonCamera
         public Vector3 cameraOffsetVector = new Vector3(0, 0, 0);
 
         [Tooltip("The distance how far away the camera should be away from the target")]
-        public float desiredDistance = 5.0f;
+        public float desiredDistance = 6.0f;
         [Tooltip("Offset for the camera to not clip in objects")]
         public float collisionDistance = 0.5f;
+
+        [Tooltip("Скорость приследования")]
+        [Range(0f, 10f)] public float speedFollow = 0.5f;
 
         [Tooltip("The distance how fast the player can zoom out with each mousewheel event")]
         public float zoomOutStepValue = 1.0f;
@@ -337,10 +340,11 @@ namespace ThirdPersonCamera
             }
             else
             {
-                targetPosition = target.position;
+                //targetPosition = target.position;
             }
 
             Vector3 targetPosWithOffset = (targetPosition + offsetVectorTransformed);
+            targetPosition = Vector3.Lerp(targetPosition, target.position, speedFollow * 3 * Time.deltaTime);
             Vector3 targetPosWithCameraOffset = targetPosition + offsetVectorTransformed + cameraOffsetVectorTransformed;
 
             Vector3 testDir = targetPosWithCameraOffset - targetPosWithOffset;
@@ -385,6 +389,7 @@ namespace ThirdPersonCamera
                     }
 
                     hits = overlapHits.ToArray();
+
                 }
             }
 #if TPC_DEBUG
@@ -395,6 +400,7 @@ namespace ThirdPersonCamera
             if (hitCount > 0)
             {
                 rcms = new List<RayCastWithMags>(hitCount);
+                Debug.Log("FIRST FIND");
 
                 for (int i = 0; i < hitCount; i++)
                 {
@@ -517,6 +523,7 @@ namespace ThirdPersonCamera
                     if (newDist > desiredDistance)
                     {
                         AdjustDistance(desiredDistance);
+                        targetPosition = Vector3.Lerp(targetPosition, target.position, speedFollow * Time.deltaTime);
                         transform.position = (transformRotation * (new Vector3(0, 0, -desiredDistance) + localCameraOffsetVector)) + offsetVectorTransformed + targetPosition;
                     }
                     else
@@ -525,6 +532,7 @@ namespace ThirdPersonCamera
                         if (desiredDistance > newDist && newDist > distance + collisionDistance)
                         {
                             AdjustDistance(newDist);
+                            targetPosition = Vector3.Lerp(targetPosition, target.position, speedFollow * Time.deltaTime);
                             transform.position = (transformRotation * (new Vector3(0, 0, -distance) + localCameraOffsetVector)) + offsetVectorTransformed + targetPosition; ;
                         }
                         else
@@ -549,6 +557,7 @@ namespace ThirdPersonCamera
                     if (cameraNormalMode)
                         AdjustDistance(desiredDistance);
 
+                    targetPosition = Vector3.Lerp(targetPosition, target.position, speedFollow * Time.deltaTime);
                     transform.position = (transformRotation * (new Vector3(0, 0, -distance) + localCameraOffsetVector)) + offsetVectorTransformed + targetPosition;
                 }
 
@@ -558,10 +567,14 @@ namespace ThirdPersonCamera
                 thickness = float.MaxValue;
                 
                 AdjustDistance(desiredDistance);
-                transform.position = transformRotation * (new Vector3(0, 0, -distance) + localCameraOffsetVector) + offsetVectorTransformed + targetPosition;
+                targetPosition = Vector3.Lerp(targetPosition, target.position, speedFollow * Time.deltaTime);
+               // Debug.Log(targetPosition);
+                Vector3 newPosition = transformRotation * (new Vector3(0, 0, -distance) + localCameraOffsetVector) + offsetVectorTransformed + targetPosition;
+                transform.position = newPosition;
             }
             else if (!cameraNormalMode)
             {
+                targetPosition = Vector3.Lerp(targetPosition, target.position, speedFollow * Time.deltaTime);
                 transform.position += (targetPosition - prevTargetPos);
             }
 
