@@ -7,4 +7,12 @@
     public static string CloseZoom = nameof(CloseZoom);
     public static string ChangeWeapon = nameof(ChangeWeapon);
     public static string Reload = nameof(Reload);
+    public static string Weapon1 = nameof(Weapon1);
+    public static string Weapon2 = nameof(Weapon2);
+    public static string Weapon3 = nameof(Weapon3);
+    public static string Weapon4 = nameof(Weapon4);
+    public static string Weapon5 = nameof(Weapon5);
+    public static string Weapon6 = nameof(Weapon6);
+    public static string Mine = nameof(Mine);
+    public static string Grenade = nameof(Grenade);
 }
