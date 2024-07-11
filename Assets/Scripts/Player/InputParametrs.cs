@@ -15,4 +15,8 @@
     public static string Weapon6 = nameof(Weapon6);
     public static string Mine = nameof(Mine);
     public static string Grenade = nameof(Grenade);
+    public static string SelectCharacter = nameof(SelectCharacter);
+    public static string SelectCraft = nameof(SelectCraft);
+    public static string SelectShop = nameof(SelectShop);
+    public static string Settings = nameof(Settings);
 }

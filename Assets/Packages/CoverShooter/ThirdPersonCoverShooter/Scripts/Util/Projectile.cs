@@ -40,7 +40,9 @@ namespace CoverShooter
             if (_path >= Distance)
             {
                 if (Target != null)
-                    Target.SendMessage("OnHit", Hit, SendMessageOptions.DontRequireReceiver);
+                {
+                    Target.SendMessage("OnHit", Hit);
+                }
 
                 GameObject.Destroy(gameObject);
             }

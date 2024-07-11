@@ -299,7 +299,7 @@ namespace CoverShooter
                 if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Down))
                 {
                     _controller.InputThrowGrenade();
-                    _controller.InputTakeGrenade();
+                  //  _controller.InputTakeGrenade();\
                  /*   if (_takeGrenade != null)
                     {
                         StopCoroutine(_takeGrenade);
@@ -327,15 +327,40 @@ namespace CoverShooter
 
         protected virtual void UpdateAttack()
         {
+            WeaponShootType type = WeaponShootType.Single;
+
+            if (_motor.WeaponEquipState == WeaponEquipState.equipped)
+            {
+                if (!_motor.IsEquipped)
+                    return;
+                else if (_motor.Weapon.RightMelee != null && _motor.EquippedWeapon.Gun != null)
+                    type = _motor.EquippedWeapon.Gun.shootType;
+                else if (_motor.Weapon.LeftMelee != null && _motor.EquippedWeapon.Gun != null)
+                    type = _motor.EquippedWeapon.Gun.shootType;
+            }
+
             if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Down))
             {
-                _controller.FireInput = true;
+                if (type == WeaponShootType.Queue)
+                {
+                    _controller.FireInput = true;
+                }
+
                 _controller.ZoomInput = true;
             }
 
             if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Up))
             {
-                _controller.FireInput = false;
+                if (type == WeaponShootType.Single)
+                {
+                    _controller.FireInput = true;
+                    StartCoroutine(StopFireForSingleWeapon());
+                }
+                else
+                {
+                    _controller.FireInput = false;
+                }
+
                 _controller.ZoomInput = false;
             }
 
@@ -386,6 +411,12 @@ namespace CoverShooter
             }
             else
                 _controller.ScopeInput = false;
+        }
+
+        private IEnumerator StopFireForSingleWeapon()
+        {
+            yield return new WaitForSeconds(0.1f);
+            _controller.FireInput = false;
         }
 
         protected virtual void UpdateRolling()
@@ -494,10 +525,10 @@ namespace CoverShooter
 
             if (TCKInput.GetAction(InputParametrs.ChangeWeapon, EActionEvent.Down))
             {
-                if (currentWeapon == 0 && _inventory != null)
-                    inputWeapon(_inventory.Weapons.Length);
+                if (_inventory != null && currentWeapon == _inventory.Weapons.Length)
+                    inputWeapon(0);
                 else
-                    inputWeapon(currentWeapon - 1);
+                    inputWeapon(currentWeapon + 1);
             }
             /*else if (Input.mouseScrollDelta.y > 0)
             {

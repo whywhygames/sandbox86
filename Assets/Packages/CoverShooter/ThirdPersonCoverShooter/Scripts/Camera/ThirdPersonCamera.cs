@@ -553,7 +553,7 @@ namespace CoverShooter
             }
 
             var isScoped = controller != null && controller.IsScoping;
-            var lerp = 6.0f;
+            var lerp = 0.5f;
 
             if (isScoped || (Target != null && Target.IsChangingWeapon))
                 alphaTarget = 0;

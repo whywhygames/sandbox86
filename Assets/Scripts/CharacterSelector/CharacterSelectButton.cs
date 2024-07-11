@@ -1,11 +1,13 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSelectButton : MonoBehaviour
 {
     [SerializeField] private CharacterSelector _characterSelector;
-    [SerializeField] private CharacterType _characterType;
+    [SerializeField] private Image _iconImage;
 
+    private CharacterViewConfigure _configure;
     private Button _button;
 
     private void OnEnable()
@@ -19,8 +21,15 @@ public class CharacterSelectButton : MonoBehaviour
         _button.onClick.RemoveListener(OnClickHandler);
     }
 
+    public void Initialize(CharacterViewConfigure configure, CharacterSelector selector)
+    {
+        _characterSelector = selector;
+        _configure = configure;
+        _iconImage.sprite = _configure.IconButton;
+    }
+
     private void OnClickHandler()
     {
-        _characterSelector.OnClickHandler(_characterType);
+        _characterSelector.OnClickHandler(_configure.CharacterType);
     }
 }

@@ -147,6 +147,7 @@ namespace CoverShooter
         public void OnTakenHit(Hit hit)
         {
             Deal(hit.Damage);
+            Debug.Log(1111);
         }
 
         /// <summary>

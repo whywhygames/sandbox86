@@ -6,6 +6,8 @@ namespace CoverShooter
     /// <summary>
     /// Default implementation of the BaseGun script.
     /// </summary>
+    /// 
+
     public class Gun : BaseGun
     {
         /// <summary>

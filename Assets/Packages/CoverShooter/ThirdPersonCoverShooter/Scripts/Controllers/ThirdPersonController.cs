@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using CoverShooter.AI;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace CoverShooter
@@ -53,6 +55,7 @@ namespace CoverShooter
             }
         }
 
+        public GrenadeInventoryCounter GrenadeInventoryCounter;
         /// <summary>
         /// Determines if the character takes cover automatically instead of waiting for player input.
         /// </summary>
@@ -273,6 +276,8 @@ namespace CoverShooter
         private bool _hasGrenadePath;
 
         private BaseActor _meleeTarget;
+
+        public event UnityAction ThrowGrenadeEvent;
 
         private void Awake()
         {
@@ -624,7 +629,7 @@ namespace CoverShooter
                         else
                             destroyGrenadePreview();
 
-                        if (_hasGrenadePath && _wantsToThrowGrenade)
+                        if (_hasGrenadePath && _wantsToThrowGrenade && GrenadeInventoryCounter.CountGrenade > 0)
                         {
                             if (ImmediateTurns)
                                 _motor.InputPossibleImmediateTurn();
@@ -632,6 +637,7 @@ namespace CoverShooter
                             _motor.SetBodyTarget(BodyTargetInput);
                             _motor.SetAimTarget(BodyTargetInput);
                             _motor.InputThrowGrenade(_grenadePath, _grenadePathLength, _motor.Grenade.Step);
+                            ThrowGrenadeEvent?.Invoke();
                         }
 
                         if (_wantsToCancelGrenade)
@@ -646,6 +652,7 @@ namespace CoverShooter
                         checkMovement(2);
                         checkCover();
                         checkCrouch();
+
                     }
                     break;
 

@@ -11,11 +11,13 @@ public class PlayerBootstrap : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
     [SerializeField] private Material _material;
 
+    [field: SerializeField] public CharacterType Type = CharacterType.Bom;
+
     private CharacterConfigure _currentCharacter;
 
     private void Start()
     {
-        SetCharater(CharacterType.Bom);
+        SetCharater(Type);
     }
 
     public void SetCharater(CharacterType characterType)
@@ -32,6 +34,7 @@ public class PlayerBootstrap : MonoBehaviour
 
         _skinnedMeshRenderer.sharedMesh = _currentCharacter.Mesh;
         _material.mainTexture = _currentCharacter.Texture;
+        Type = characterType;
     }
 
     private CharacterConfigure GetCharacter(CharacterType characterType)

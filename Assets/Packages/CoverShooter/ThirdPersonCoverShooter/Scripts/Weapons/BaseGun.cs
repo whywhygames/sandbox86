@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace CoverShooter
 {
+    public enum WeaponShootType
+    {
+        Single,
+        Queue
+    }
     /// <summary>
     /// Guns raycasts bullets, manage magazine and recoil.
     /// For player characters bullets originate at camera in order for player to be able to fire on targets they can see, even if there is a small obstacle in front of the gun. The fire origin is set by a camera. Since AI do not have Third Person Camera attached their bullets are fired starting from the Aim marker, which usually is at the end of the gun.
@@ -14,7 +19,7 @@ namespace CoverShooter
     public abstract class BaseGun : MonoBehaviour
     {
         #region Properties
-
+        public WeaponShootType shootType;
         /// <summary>
         /// Point of creation for bullets in world space.
         /// </summary>
