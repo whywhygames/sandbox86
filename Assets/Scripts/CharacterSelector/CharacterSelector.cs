@@ -10,30 +10,21 @@ public class CharacterSelector : MonoBehaviour
     [SerializeField] private List<CharacterViewConfigure> _configuresButtons = new List<CharacterViewConfigure>();
     [SerializeField] private CharacterSelectButton _burronPrefab;
     [SerializeField] private Transform _container;
-    [SerializeField] private Image _ñharacterImage;
+   // [SerializeField] private Image _ñharacterImage;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private Button _closePanelButton;
-    [SerializeField] private Button _selectCharacterButton;
-    [SerializeField] private TMP_Text _selectCharacterButtonText;
+   // [SerializeField] private Button _selectCharacterButton;
+   // [SerializeField] private TMP_Text _selectCharacterButtonText;
 
     private List<CharacterSelectButton> _selectButtons = new List<CharacterSelectButton>();
     private CharacterType _currentSelectCharacter;
 
     private void Start()
     {
-        SubscribeButton();
-
         ClearList();
 
         FillList();
 
         OnClickHandler(_playerBootstrap.Type);
-    }
-
-    private void SubscribeButton()
-    {
-        _closePanelButton.onClick.AddListener(Close);
-        _selectCharacterButton.onClick.AddListener(SetCharacter);
     }
 
     private void ClearList()
@@ -60,8 +51,8 @@ public class CharacterSelector : MonoBehaviour
 
     private void SetCharacter()
     {
-        _selectCharacterButtonText.text = "YOU";
-        _selectCharacterButton.interactable = false;
+       // _selectCharacterButtonText.text = "YOU";
+       // _selectCharacterButton.interactable = false;
         _playerBootstrap.SetCharater(_currentSelectCharacter);
     }
 
@@ -76,22 +67,23 @@ public class CharacterSelector : MonoBehaviour
     public void OnClickHandler(CharacterType characterType)
     {
         _currentSelectCharacter = characterType;
-       // _playerBootstrap.SetCharater(characterType);
+        // _playerBootstrap.SetCharater(characterType);
 
         if (_playerBootstrap.Type == _currentSelectCharacter)
         {
-            _selectCharacterButtonText.text = "YOU";
-            _selectCharacterButton.interactable = false;
+           // _selectCharacterButtonText.text = "YOU";
+           // _selectCharacterButton.interactable = false;
         }
         else
         {
-            _selectCharacterButtonText.text = "SELECT";
-            _selectCharacterButton.interactable = true;
+            _playerBootstrap.SetCharater(_currentSelectCharacter);
+            //_selectCharacterButtonText.text = "SELECT";
+           // _selectCharacterButton.interactable = true;
         }
 
-        foreach (var configureButton in _configuresButtons)
+      /*  foreach (var configureButton in _configuresButtons)
             if (configureButton.CharacterType == characterType)
-                _ñharacterImage.sprite = configureButton.IconCharacter;
+                _ñharacterImage.sprite = configureButton.IconCharacter;*/
     }
 
     private void Open()

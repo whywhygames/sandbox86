@@ -29,7 +29,6 @@ public class CharacterJumpMover : MonoBehaviour
             move = TCKInput.GetAxis(InputParametrs.Joystick);
              // var vfer = new Vector3(transform.forward.x * _speed, 0, transform.forward.z * _speed);
             // transform.Translate(vfer);
-            Debug.Log(transform.forward);
             _rigidbody.velocity = new Vector3(transform.forward.x * Mathf.Abs(move.normalized.magnitude) * _speed, _rigidbody.velocity.y, transform.forward.z * Mathf.Abs(move.normalized.magnitude) * _speed);
         }
     }

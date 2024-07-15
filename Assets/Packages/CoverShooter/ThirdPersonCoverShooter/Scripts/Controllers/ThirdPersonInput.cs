@@ -292,6 +292,7 @@ namespace CoverShooter
         }
 
         Coroutine _takeGrenade;
+        private bool _isGrenade;
         protected virtual void UpdateGrenade()
         {
             if (_motor.HasGrenadeInHand)
@@ -299,14 +300,15 @@ namespace CoverShooter
                 if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Down))
                 {
                     _controller.InputThrowGrenade();
-                  //  _controller.InputTakeGrenade();\
-                 /*   if (_takeGrenade != null)
-                    {
-                        StopCoroutine(_takeGrenade);
-                        _takeGrenade = null;
-                    }
+                    _isGrenade = false;
+                    //  _controller.InputTakeGrenade();\
+                    /*   if (_takeGrenade != null)
+                       {
+                           StopCoroutine(_takeGrenade);
+                           _takeGrenade = null;
+                       }
 
-                    _takeGrenade = StartCoroutine(TakeGrenade());*/
+                       _takeGrenade = StartCoroutine(TakeGrenade());*/
                 }
 
                 /*if (Input.GetButtonDown("Cancel"))
@@ -314,8 +316,16 @@ namespace CoverShooter
             }
             /* if (Input.GetButton("Grenade"))
                  _controller.InputTakeGrenade();*/
-            if (TCKInput.GetAction(InputParametrs.Grenade, EActionEvent.Down))
+            if (TCKInput.GetAction(InputParametrs.Grenade, EActionEvent.Down) && _isGrenade == false)
+            {
                 _controller.InputTakeGrenade();
+                _isGrenade = true;
+            }
+            else if (TCKInput.GetAction(InputParametrs.Grenade, EActionEvent.Down) && _isGrenade)
+            {
+                _controller.InputCancelGrenade();
+                _isGrenade = false;
+            }
         }
 
         private IEnumerator TakeGrenade()
@@ -500,12 +510,12 @@ namespace CoverShooter
             if (Input.GetKey(KeyCode.Alpha9)) { _motor.InputCancelGrenade(); inputWeapon(8); }
             if (Input.GetKey(KeyCode.Alpha0)) { _motor.InputCancelGrenade(); inputWeapon(9); }*/
 
-            if (TCKInput.GetAction(InputParametrs.Weapon1, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(0); } //убрать оружие
-            if (TCKInput.GetAction(InputParametrs.Weapon2, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(1); }
-            if (TCKInput.GetAction(InputParametrs.Weapon3, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(2); }
-            if (TCKInput.GetAction(InputParametrs.Weapon4, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(3); }
-            if (TCKInput.GetAction(InputParametrs.Weapon5, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(4); }
-            if (TCKInput.GetAction(InputParametrs.Weapon6, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(5); }
+            if (TCKInput.GetAction(InputParametrs.Weapon1, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(0); _isGrenade = false; } //убрать оружие
+            if (TCKInput.GetAction(InputParametrs.Weapon2, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(1); _isGrenade = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon3, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(2); _isGrenade = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon4, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(3); _isGrenade = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon5, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(4); _isGrenade = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon6, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(5); _isGrenade = false; }
      
 
             /*if (Input.mouseScrollDelta.y < 0)

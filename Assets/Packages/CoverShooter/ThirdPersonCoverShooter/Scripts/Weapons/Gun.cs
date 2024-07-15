@@ -126,5 +126,14 @@ namespace CoverShooter
             BulletInventory += count;
             ChangeBullets?.Invoke();
         }
+
+        public void FillMagazine(int count)
+        {
+            if (LoadedBullets < MagazineSize)
+            {
+                LoadedBullets += count;
+                ChangeBullets?.Invoke();
+            }
+        }
     }
 }

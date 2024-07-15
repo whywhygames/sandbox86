@@ -19,4 +19,10 @@
     public static string SelectCraft = nameof(SelectCraft);
     public static string SelectShop = nameof(SelectShop);
     public static string Settings = nameof(Settings);
+
+
+    public static string CraftCube = nameof(CraftCube);
+    public static string CraftCylinder = nameof(CraftCylinder);
+    public static string Craft = nameof(Craft);
+    public static string RotateObject = nameof(RotateObject);
 }

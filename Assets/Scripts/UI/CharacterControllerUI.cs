@@ -35,7 +35,7 @@ public class CharacterControllerUI : MonoBehaviour
 
                 case WeaponType.Rifle:
                     _fireButton.Activate();
-                    _reloadButton.Activate();
+                    _reloadButton.Deactivate();
                     break;
 
                 case WeaponType.Shotgun:
