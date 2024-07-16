@@ -79,7 +79,7 @@ public class BuildingsGrid : MonoBehaviour
                 flyingBuilding.transform.position = Vector3.Lerp(flyingBuilding.transform.position, new Vector3(x, y, z), _speed * Time.deltaTime);
                 flyingBuilding.SetTransparent(available);
 
-                if (available && TCKInput.GetAction(InputParametrs.Craft, EActionEvent.Down)) 
+                if (available && TCKInput.GetAction(InputParametrs.CraftSystem.Craft, EActionEvent.Down)) 
                 {
                     PlaceFlyingBuilding(x, z);
                 }
@@ -91,7 +91,7 @@ public class BuildingsGrid : MonoBehaviour
 
     private void CheckRotate()
     {
-        if (TCKInput.GetAction(InputParametrs.RotateObject, EActionEvent.Down))
+        if (TCKInput.GetAction(InputParametrs.CraftSystem.RotateObject, EActionEvent.Down))
         {
             _targetRotation = new Vector3(flyingBuilding.transform.eulerAngles.x, (flyingBuilding.transform.eulerAngles.y + 90), flyingBuilding.transform.eulerAngles.z);
             flyingBuilding.transform.eulerAngles = _targetRotation;

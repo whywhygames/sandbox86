@@ -474,7 +474,37 @@ namespace CoverShooter
                     }
                 }
                 else
+                {
+                    WeaponType type = WeaponType.Sniper;
                     state = States.Zoom;
+
+                    if (!_cachedMotor.IsEquipped)
+                        return;
+                    else if (_cachedMotor.Weapon.RightMelee != null)
+                        type = _cachedMotor.Weapon.RightMelee.Type;
+                    else if (_cachedMotor.Weapon.LeftMelee != null)
+                        type = _cachedMotor.Weapon.LeftMelee.Type;
+
+                    switch (type)
+                    {
+                        case WeaponType.Pistol:
+                            state = States.ZoomPistol;
+                            break;
+
+                        case WeaponType.Rifle:
+                            state = States.ZoomRifle;
+                            break;
+
+                        case WeaponType.Shotgun:
+                            state = States.ZoomShotgun;
+                            break;
+
+                        case WeaponType.Sniper:
+                            state = States.ZoomSniper;
+                            break;
+                    }
+
+                }
             }
             else if (Target.IsClimbingOrVaulting)
             {

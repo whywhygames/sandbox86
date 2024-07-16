@@ -8,6 +8,7 @@ public class CraftMenu : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _weaponPanel;
     [SerializeField] private CanvasGroup _craftPanel;
+    [SerializeField] private CraftCategoryManager _craftCategoryManager;
     [SerializeField] private BuildingsGrid _buildingGrid;
     [SerializeField] private Button _button;
     [SerializeField] private TMP_Text _text;
@@ -33,6 +34,7 @@ public class CraftMenu : MonoBehaviour
             _craftPanel.Deactivate();
             _text.text = "OPEN CRAFT";
             _buildingGrid.StopCraft();
+            _craftCategoryManager.Setup();
         }
         else
         {

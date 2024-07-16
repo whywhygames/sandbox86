@@ -351,28 +351,51 @@ namespace CoverShooter
 
             if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Down))
             {
-                if (type == WeaponShootType.Queue)
-                {
-                    _controller.FireInput = true;
-                }
-
-                _controller.ZoomInput = true;
+                _controller.FireInput = true;   
             }
 
             if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Up))
             {
-                if (type == WeaponShootType.Single)
+                _controller.FireInput = false;
+            }
+
+            if (TCKInput.GetAction(InputParametrs.CloseZoom, EActionEvent.Down))
+            {
+
+                if (_controller.ZoomInput)
                 {
-                    _controller.FireInput = true;
-                    StartCoroutine(StopFireForSingleWeapon());
+                    _controller.ZoomInput = false;
                 }
                 else
                 {
-                    _controller.FireInput = false;
+                    _controller.ZoomInput = true;
                 }
-
-                _controller.ZoomInput = false;
             }
+
+            /*  if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Down))
+              {
+                  if (type == WeaponShootType.Queue)
+                  {
+                      _controller.FireInput = true;
+                  }
+
+                  _controller.ZoomInput = true;
+              }
+
+              if (TCKInput.GetAction(InputParametrs.Fire, EActionEvent.Up))
+              {
+                  if (type == WeaponShootType.Single)
+                  {
+                      _controller.FireInput = true;
+                      StartCoroutine(StopFireForSingleWeapon());
+                  }
+                  else
+                  {
+                      _controller.FireInput = false;
+                  }
+
+                  _controller.ZoomInput = false;
+              }*/
 
             if (Input.GetButtonDown("Melee"))
                 _controller.InputMelee();
@@ -380,8 +403,8 @@ namespace CoverShooter
            /* if (Input.GetButtonDown("Zoom"))
                 _controller.ZoomInput = true;*/
 
-            if (TCKInput.GetAction(InputParametrs.CloseZoom, EActionEvent.Down))
-                _controller.ZoomInput = false;
+           /* if (TCKInput.GetAction(InputParametrs.CloseZoom, EActionEvent.Down))
+                _controller.ZoomInput = false;*/
 
            /* if (Input.GetButtonUp("Zoom"))
                 _controller.ZoomInput = false;*/
@@ -510,12 +533,12 @@ namespace CoverShooter
             if (Input.GetKey(KeyCode.Alpha9)) { _motor.InputCancelGrenade(); inputWeapon(8); }
             if (Input.GetKey(KeyCode.Alpha0)) { _motor.InputCancelGrenade(); inputWeapon(9); }*/
 
-            if (TCKInput.GetAction(InputParametrs.Weapon1, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(0); _isGrenade = false; } //убрать оружие
-            if (TCKInput.GetAction(InputParametrs.Weapon2, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(1); _isGrenade = false; }
-            if (TCKInput.GetAction(InputParametrs.Weapon3, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(2); _isGrenade = false; }
-            if (TCKInput.GetAction(InputParametrs.Weapon4, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(3); _isGrenade = false; }
-            if (TCKInput.GetAction(InputParametrs.Weapon5, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(4); _isGrenade = false; }
-            if (TCKInput.GetAction(InputParametrs.Weapon6, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(5); _isGrenade = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon1, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(0); _isGrenade = false; _controller.ZoomInput = false; } //убрать оружие
+            if (TCKInput.GetAction(InputParametrs.Weapon2, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(1); _isGrenade = false; _controller.ZoomInput = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon3, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(2); _isGrenade = false; _controller.ZoomInput = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon4, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(3); _isGrenade = false; _controller.ZoomInput = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon5, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(4); _isGrenade = false; _controller.ZoomInput = false; }
+            if (TCKInput.GetAction(InputParametrs.Weapon6, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(5); _isGrenade = false; _controller.ZoomInput = false; }
      
 
             /*if (Input.mouseScrollDelta.y < 0)

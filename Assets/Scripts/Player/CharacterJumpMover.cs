@@ -26,10 +26,14 @@ public class CharacterJumpMover : MonoBehaviour
     {
         if (_isJump)
         {
+            Debug.Log(move.magnitude);
             move = TCKInput.GetAxis(InputParametrs.Joystick);
+            if (move.magnitude > 0.3)
+            {
+                _rigidbody.velocity = new Vector3(transform.forward.x * Mathf.Abs(move.normalized.magnitude) * _speed, _rigidbody.velocity.y, transform.forward.z * Mathf.Abs(move.normalized.magnitude) * _speed);
+            }
              // var vfer = new Vector3(transform.forward.x * _speed, 0, transform.forward.z * _speed);
             // transform.Translate(vfer);
-            _rigidbody.velocity = new Vector3(transform.forward.x * Mathf.Abs(move.normalized.magnitude) * _speed, _rigidbody.velocity.y, transform.forward.z * Mathf.Abs(move.normalized.magnitude) * _speed);
         }
     }
 

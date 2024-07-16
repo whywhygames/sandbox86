@@ -34,15 +34,16 @@ public class Building : MonoBehaviour
     {
         Collider[] hits = Physics.OverlapBox(_cubePoint.position, _cubeScale, transform.rotation, _layerMask);
 
-        Debug.Log(hits.Length);
         if (hits.Length > 0)
         {
             MainRenderer.material = _imposibleMaterial;
+
             CanPut = false;
         }
         else
         {
             MainRenderer.material = _posibleMaterial;
+
             CanPut = true;
         }
     }

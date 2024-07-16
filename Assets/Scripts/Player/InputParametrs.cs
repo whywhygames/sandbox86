@@ -1,4 +1,4 @@
-﻿public static class InputParametrs
+﻿public static class InputParametrs 
 {
     public static string Joystick = nameof(Joystick);
     public static string Jump = nameof(Jump);
@@ -20,9 +20,20 @@
     public static string SelectShop = nameof(SelectShop);
     public static string Settings = nameof(Settings);
 
+    public static class CraftSystem
+    {
+        public static string Craft = nameof(Craft);
+        public static string RotateObject = nameof(RotateObject);
 
-    public static string CraftCube = nameof(CraftCube);
-    public static string CraftCylinder = nameof(CraftCylinder);
-    public static string Craft = nameof(Craft);
-    public static string RotateObject = nameof(RotateObject);
+        public static class Categoty
+        {
+            public static string BackToCategory = nameof(BackToCategory);
+
+            public static string Blcoks = nameof(CraftCategory.Blocks);
+            public static string Decore = nameof(CraftCategory.Decore);
+            public static string Bird = nameof(CraftCategory.Bird);
+            public static string House = nameof(CraftCategory.House);
+            public static string Other = nameof(CraftCategory.Other);
+        }
+    }
 }

@@ -1,8 +1,26 @@
 ﻿public enum CraftType
 {
-    Cube,
-    Cylinder, 
-    Type3,
-    Type4, 
-    Type5
+    Cliff,
+    Dirt,
+    FullGrass,
+    Grass,
+    Sand,
+    Cock,
+    Flamingo,
+    Peacock,
+    Swallow,
+    Swan, 
+    BigDoor,
+    Door,
+    Floor,
+    Stairs,
+    Wall,
+    Palm,
+    Bed,
+    Chair, 
+    Table,
+    Column,
+    Teleport,
+    RedBarrel,
+    Firework
 }

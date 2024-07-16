@@ -80,6 +80,10 @@ namespace CoverShooter
         /// </summary>
         [Tooltip("Camera state to use when the character is using zoom.")]
         public CameraState Zoom;
+        public CameraState ZoomPistol;
+        public CameraState ZoomRifle;
+        public CameraState ZoomSniper;
+        public CameraState ZoomShotgun;
 
         /// <summary>
         /// Camera state to use when the character is aiming from a corner in low cover and using zoom.

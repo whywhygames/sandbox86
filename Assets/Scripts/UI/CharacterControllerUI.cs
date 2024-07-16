@@ -17,7 +17,7 @@ public class CharacterControllerUI : MonoBehaviour
         }
         else if (_characterMotor.WeaponEquipState == WeaponEquipState.equipped)
         {
-            WeaponType type = WeaponType.Pistol;
+            WeaponType type = WeaponType.Sniper;
 
             if (!_characterMotor.IsEquipped)
                 return;
@@ -31,25 +31,30 @@ public class CharacterControllerUI : MonoBehaviour
                 case WeaponType.Pistol:
                     _fireButton.Activate();
                     _reloadButton.Activate();
+                    _closeZoomButton.Activate();
                     break;
 
                 case WeaponType.Rifle:
                     _fireButton.Activate();
                     _reloadButton.Deactivate();
+                    _closeZoomButton.Activate();
                     break;
 
                 case WeaponType.Shotgun:
                     _fireButton.Activate();
                     _reloadButton.Activate();
+                    _closeZoomButton.Activate();
                     break;
 
                 case WeaponType.Sniper:
                     _fireButton.Activate();
                     _reloadButton.Activate();
+                    _closeZoomButton.Activate();
                     break;
 
                 case WeaponType.Fist:
                     _fireButton.Activate();
+                    _closeZoomButton.Deactivate();
                     break;
             }
         }
@@ -57,16 +62,17 @@ public class CharacterControllerUI : MonoBehaviour
         {
             _fireButton.Deactivate();
             _reloadButton.Deactivate();
+            _closeZoomButton.Deactivate();
         }
 
-      /*  if (_characterMotor.IsAimingGun)
-        {
-            _closeZoomButton.Activate();
-        }
-        else
-        {
-            _closeZoomButton.Deactivate();
-        }*/
+        /*  if (_characterMotor.IsAimingGun)
+          {
+              _closeZoomButton.Activate();
+          }
+          else
+          {
+              _closeZoomButton.Deactivate();
+          }*/
     }
 
     private void CheckWeaponType()
