@@ -27,6 +27,7 @@ public class Laser : MonoBehaviour
     private void Start()
     {
         _gunForBullet = _gun.GetComponent<Gun>();
+        _audioSource.clip = _laserSound;
     }
 
     private void Update()

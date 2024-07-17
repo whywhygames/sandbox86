@@ -1,31 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using TouchControlsKit;
+using UnityEditor;
 using UnityEngine;
 
 public class BuildingsGrid : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera _mainCamera;
     [SerializeField] private Transform _directionPoint;
     [SerializeField] private List<Building> _poolObjects = new List<Building>();
     [SerializeField] private LayerMask _isCraftableMask;
     [SerializeField] private float _speed;
+    [SerializeField] private float _maxDistance;
 
     public Vector2Int GridSize = new Vector2Int(10000, 10000);
     private Vector3 _targetRotation;
+    private Vector3 _newPosition;
 
-    private Building[,] grid;
-    private Building flyingBuilding;
+    private Building[,] _grid;
+    private Building _flyingBuilding;
 
-    private RaycastHit hit;
+    private RaycastHit _hit;
+    private Ray _ray;
 
     private List<Building> _poolCreatedObjects = new List<Building>();
 
     private void Awake()
     {
-        grid = new Building[GridSize.x, GridSize.y];
+        _grid = new Building[GridSize.x, GridSize.y];
         
-        mainCamera = Camera.main;
+        _mainCamera = Camera.main;
 
         foreach (var item in _poolObjects)
         {
@@ -36,52 +40,66 @@ public class BuildingsGrid : MonoBehaviour
 
     public void StartPlacingBuilding(CraftType type)
     {
-        if (flyingBuilding != null)
+        if (_flyingBuilding != null)
         {
-            flyingBuilding.gameObject.SetActive(false);
+            _flyingBuilding.gameObject.SetActive(false);
         }
 
         foreach (var item in _poolCreatedObjects)
         {
             if (item.Type == type)
             {
-                flyingBuilding = item;
-                Ray ray = new Ray(mainCamera.transform.position, _directionPoint.position);
-                Physics.Raycast(mainCamera.transform.position, _directionPoint.forward * 10, out hit, 10000, _isCraftableMask);
-                flyingBuilding.transform.position = hit.point;
-                flyingBuilding.gameObject.SetActive(true);
+                _flyingBuilding = item;
+                Ray ray = new Ray(_mainCamera.transform.position, _directionPoint.position);
+                Physics.Raycast(_mainCamera.transform.position, _directionPoint.forward * 10, out _hit, 10000, _isCraftableMask);
+
+                _newPosition = _hit.point;
+
+                if (Vector3.Distance(_mainCamera.transform.position, _hit.point) > _maxDistance)
+                {
+                    _newPosition = _ray.GetPoint(_maxDistance);
+                }
+
+                _flyingBuilding.transform.position = _newPosition;
+                _flyingBuilding.gameObject.SetActive(true);
             }
         }
     }
 
     private void Update()
     {
-        if (flyingBuilding != null)
+        if (_flyingBuilding != null)
         {
-            Ray ray = new Ray(mainCamera.transform.position, _directionPoint.position);
-            Physics.Raycast(ray);
+            _ray = new Ray(_mainCamera.transform.position, _directionPoint.forward * 10);
 
-            if (Physics.Raycast(mainCamera.transform.position, _directionPoint.forward * 10,out hit,10000,_isCraftableMask))
+            if (Physics.Raycast(_ray,out _hit,10000,_isCraftableMask))
             {
+                int x = Mathf.RoundToInt(_hit.point.x);
+                int y = Mathf.RoundToInt(_hit.point.y);
+                int z = Mathf.RoundToInt(_hit.point.z);
 
-                int x = Mathf.RoundToInt(hit.point.x);
-                int y = Mathf.RoundToInt(hit.point.y);
-                int z = Mathf.RoundToInt(hit.point.z);
+                if (Vector3.Distance(_mainCamera.transform.position, _hit.point) > _maxDistance)
+                {
+                    x = Mathf.RoundToInt(_ray.GetPoint(_maxDistance).x);
+                    y = Mathf.RoundToInt(_ray.GetPoint(_maxDistance).y);
+                    z = Mathf.RoundToInt(_ray.GetPoint(_maxDistance).z);
+                }
 
                 bool available = true;
 
-                if (x < 0 || x > GridSize.x - flyingBuilding.Size.x) available = false;
-                if (z < 0 || z > GridSize.y - flyingBuilding.Size.y) available = false;
+                if (x < 0 || x > GridSize.x - _flyingBuilding.Size.x) available = false;
+                if (z < 0 || z > GridSize.y - _flyingBuilding.Size.y) available = false;
 
-                if (available && flyingBuilding.CanPut == false) available = false;
+                if (available && _flyingBuilding.CanPut == false) available = false;
 
-             //   flyingBuilding.transform.position = new Vector3(x, y, z);
-                flyingBuilding.transform.position = Vector3.Lerp(flyingBuilding.transform.position, new Vector3(x, y, z), _speed * Time.deltaTime);
-                flyingBuilding.SetTransparent(available);
+                _newPosition = new Vector3(x, y, z);
+
+                _flyingBuilding.transform.position = Vector3.Lerp(_flyingBuilding.transform.position, _newPosition, _speed * Time.deltaTime);
+                _flyingBuilding.SetTransparent(available);
 
                 if (available && TCKInput.GetAction(InputParametrs.CraftSystem.Craft, EActionEvent.Down)) 
                 {
-                    PlaceFlyingBuilding(x, z);
+                    PlaceFlyingBuilding(x, z, _newPosition);
                 }
             }
 
@@ -93,8 +111,8 @@ public class BuildingsGrid : MonoBehaviour
     {
         if (TCKInput.GetAction(InputParametrs.CraftSystem.RotateObject, EActionEvent.Down))
         {
-            _targetRotation = new Vector3(flyingBuilding.transform.eulerAngles.x, (flyingBuilding.transform.eulerAngles.y + 90), flyingBuilding.transform.eulerAngles.z);
-            flyingBuilding.transform.eulerAngles = _targetRotation;
+            _targetRotation = new Vector3(_flyingBuilding.transform.eulerAngles.x, (_flyingBuilding.transform.eulerAngles.y + 90), _flyingBuilding.transform.eulerAngles.z);
+            _flyingBuilding.transform.eulerAngles = _targetRotation;
           //  flyingBuilding.transform.eulerAngles = Vector3.Lerp(flyingBuilding.transform.eulerAngles, _targetRotation, _speed * Time.deltaTime);
         }
 
@@ -115,24 +133,24 @@ public class BuildingsGrid : MonoBehaviour
          return false;
      }*/
 
-    private void PlaceFlyingBuilding(int placeX, int placeY)
+    private void PlaceFlyingBuilding(int placeX, int placeY, Vector3 newPosition)
     {
-        for (int x = 0; x < flyingBuilding.Size.x; x++)
+        for (int x = 0; x < _flyingBuilding.Size.x; x++)
         {
-            for (int y = 0; y < flyingBuilding.Size.y; y++)
+            for (int y = 0; y < _flyingBuilding.Size.y; y++)
             {
-                grid[placeX + x, placeY + y] = flyingBuilding;
+                _grid[placeX + x, placeY + y] = _flyingBuilding;
             }
         }
 
         //   flyingBuilding.SetNormal();
-        Instantiate(flyingBuilding.Prefab, flyingBuilding.transform.position, flyingBuilding.transform.rotation);
+        Instantiate(_flyingBuilding.Prefab, newPosition, _flyingBuilding.transform.rotation);
       //  flyingBuilding = null;
     }
 
     public void StopCraft()
     {
-        flyingBuilding.gameObject.SetActive(false);
-        flyingBuilding = null;
+        _flyingBuilding.gameObject.SetActive(false);
+        _flyingBuilding = null;
     }
 }
