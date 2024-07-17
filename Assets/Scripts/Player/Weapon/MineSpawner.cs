@@ -26,4 +26,10 @@ public class MineSpawner : MonoBehaviour
             }
         }
     }
+
+    public void AddMine(int count)
+    {
+        MineCount += count;
+        MineSpawned?.Invoke();
+    }
 }

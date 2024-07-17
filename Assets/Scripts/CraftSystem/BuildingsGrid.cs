@@ -12,6 +12,7 @@ public class BuildingsGrid : MonoBehaviour
     [SerializeField] private LayerMask _isCraftableMask;
     [SerializeField] private float _speed;
     [SerializeField] private float _maxDistance;
+    [SerializeField] private Transform _container;
 
     public Vector2Int GridSize = new Vector2Int(10000, 10000);
     private Vector3 _targetRotation;
@@ -33,7 +34,7 @@ public class BuildingsGrid : MonoBehaviour
 
         foreach (var item in _poolObjects)
         {
-            _poolCreatedObjects.Add(Instantiate(item));
+            _poolCreatedObjects.Add(Instantiate(item, _container));
             _poolCreatedObjects[_poolCreatedObjects.Count - 1].gameObject.SetActive(false);
         }
     }

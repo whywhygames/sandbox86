@@ -28,4 +28,11 @@ public class GrenadeInventoryCounter : MonoBehaviour
         CountGrenade--;
         ChangeCount?.Invoke();
     }
+
+    public void AddMine(int count)
+    {
+        CountGrenade += count;
+        ChangeCount?.Invoke();
+
+    }
 }

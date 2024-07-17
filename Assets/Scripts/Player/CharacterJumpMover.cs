@@ -14,17 +14,19 @@ public class CharacterJumpMover : MonoBehaviour
     private bool _isJump;
     Vector2 move;
 
+    public bool IsJump { get => _isJump; private set => _isJump = value; }
+
     private void FixedUpdate()
     {
-        _isJump = !Physics.CheckSphere(_legs.position, _radius / 10, _groundMask);
+        IsJump = !Physics.CheckSphere(_legs.position, _radius / 10, _groundMask);
 
-        if (_isJump == false)
+        if (IsJump == false)
             move = Vector2.zero;
     }
 
     private void LateUpdate()
     {
-        if (_isJump)
+        if (IsJump)
         {
             Debug.Log(move.magnitude);
             move = TCKInput.GetAxis(InputParametrs.Joystick);
