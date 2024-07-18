@@ -45,13 +45,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        _isWait = Random.Range(0, 2) == 0 ? true : false;
-
-        _waitTime = Random.Range(_waitTimeMin, _waitTimeMax);
-        _readyToPatrulTime = _waitTime + Random.Range(_waitTimeMin, _waitTimeMax);
-        _animator.SetBool("Walk", true);
-
-        GetRandomPoint();
+        Respawn();
     }
 
     private void Update()
@@ -81,6 +75,18 @@ public class EnemyMovement : MonoBehaviour
                 _elepsedTriggerTime = 0;
             }
         }
+    }
+
+    public void Respawn()
+    {
+        _isWait = Random.Range(0, 2) == 0 ? true : false;
+
+        _waitTime = Random.Range(_waitTimeMin, _waitTimeMax);
+        _readyToPatrulTime = _waitTime + Random.Range(_waitTimeMin, _waitTimeMax);
+        _animator.SetBool("Walk", true);
+        _isAttacked = false;
+
+        GetRandomPoint();
     }
 
     public void AttackedTriggerActivate()
@@ -176,10 +182,12 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void GetRandomPoint()
+    public Vector3 GetRandomPoint()
     {
         Vector3 randomPointInCircle = Random.insideUnitSphere * _patrulField.radius;
         _randomPoint = randomPointInCircle + _patrulField.transform.position;
         _randomPoint.y = 0;
+
+        return _randomPoint;
     }
 }

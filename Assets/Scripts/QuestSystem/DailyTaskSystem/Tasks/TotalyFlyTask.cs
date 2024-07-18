@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class TotalyFlyTask : DailyTask
 {
-    [SerializeField] private float _second;
-    
     private CharacterJumpMover _jumpMover;
-    private float _elapsedTime;
 
     private void Start()
     {
@@ -19,9 +16,9 @@ public class TotalyFlyTask : DailyTask
 
         if (_jumpMover.IsJump)
         {
-            _elapsedTime += Time.deltaTime;
+            AddCounter(Time.deltaTime);
 
-            if (_elapsedTime > _second)
+            if (CurrentCount > TargerCount)
             {
                 GiveReward();
             }

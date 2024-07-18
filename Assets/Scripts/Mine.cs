@@ -13,6 +13,14 @@ public class Mine : MonoBehaviour
     [SerializeField] private float _radius;
     [SerializeField] private float _radiusAttack;
 
+    private Hit Hit;
+
+    private void Start()
+    {
+        Hit.Damage = _power;
+        Hit.Type = HitType.Mine;
+    }
+
     private void Update()
     {
         Collider[] collision = Physics.OverlapSphere(transform.position, _radius, _layerMask);
@@ -25,30 +33,12 @@ public class Mine : MonoBehaviour
 
             foreach (Collider c in hitAttack)
             {
-                c.GetComponent<EnemyHealth>().TakeDamage(_power);
+                c.gameObject.SendMessage("OnHit", Hit);
             }
 
             Destroy(gameObject);
         }
     }
-
-   /* private void OnTriggerStay(Collider other)
-    {
-        if (other.TryGetComponent(out PlayerHealth player))
-            return;
-
-        Debug.Log(1234);
-        Collider[] hitAttack = Physics.OverlapSphere(transform.position, _radiusAttack);
-        var particle = Instantiate(_boomPaticle, transform.position, Quaternion.identity);
-        particle.gameObject.SetActive(true);
-
-        foreach (Collider c in hitAttack)
-        {
-            c.GetComponent<EnemyHealth>().TakeDamage(_power);
-        }
-
-        Destroy(gameObject);
-    }*/
 
     private void OnDrawGizmos()
     {

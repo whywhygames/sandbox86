@@ -1,13 +1,10 @@
-using CAS;
 using CoverShooter;
 using UnityEngine;
 
 public class RunMetersTask : DailyTask
 {
     [SerializeField] private CharacterMotor _charater;
-    [SerializeField] private float _meters;
     
-    private float _currentMeters;
     private Vector3 _oldPosition;
     private Vector3 _currentPosition;
     private Vector3 _startPosition;
@@ -38,9 +35,9 @@ public class RunMetersTask : DailyTask
         if (tmpDistX == 0 && tmpDistZ > 0) { _distanceX = 0; }
         if (tmpDistX > 0 && tmpDistZ == 0) { _distanceZ = 0; }
 
-        _currentMeters = _distanceX + _distanceZ;
+        ChangeEquelCounter(_distanceX + _distanceZ);
 
-        if (_currentMeters >= 100)
+        if (CurrentCount >= TargerCount)
         {
             GiveReward();
         }

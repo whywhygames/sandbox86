@@ -1,23 +1,45 @@
 using CoverShooter;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Header ("ENEMY TYPE:")]
+    [SerializeField] private EnemyType _enemyType;
+
+    [Header ("Parametrs:")]
     [SerializeField] private EnemyMovement _enemyMovement;
+    [SerializeField] private EnemyRespawner _enemyRespawner;
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealth;
     [SerializeField] private Animator _animator;
+
+    [field: SerializeField] public float RespawnTime { get; private set; }
     
     public bool IsDied { get; private set; }
 
-    public void OnHit(Hit hit)
+    public event UnityAction<HitType, EnemyType> Died;
+    public event UnityAction<EnemyHealth> Daying;
+
+    private void Start()
     {
-        TakeDamage(hit.Damage);  
+        _enemyRespawner.transform.parent = null;
     }
 
-    public void TakeDamage(float damage)
+    public void Respawn()
+    {
+        transform.position = _enemyMovement.GetRandomPoint();
+        IsDied = false;
+        gameObject.SetActive(true);
+    }
+
+    public void OnHit(Hit hit)
+    {
+        TakeDamage(hit.Damage, hit.Type); 
+    }
+
+    public void TakeDamage(float damage, HitType hitType)
     {
         if (IsDied)
             return;
@@ -28,7 +50,9 @@ public class EnemyHealth : MonoBehaviour
         if (_currentHealth <= 0)
         {
             IsDied = true;
+            Died?.Invoke(hitType, _enemyType);
             _animator.SetTrigger("Death");
+            Daying?.Invoke(this);
         }
     }
 
@@ -36,6 +60,6 @@ public class EnemyHealth : MonoBehaviour
     {
         _currentHealth = _maxHealth;
         gameObject.SetActive(false);
-        IsDied = false;
+
     }
 }

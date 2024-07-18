@@ -18,6 +18,6 @@ public class MoneyView : MonoBehaviour
 
     private void ChangeText(int moneyCount)
     {
-        _text.text = $"Money: {moneyCount}";
+        _text.text = $"{moneyCount}";
     }
 }

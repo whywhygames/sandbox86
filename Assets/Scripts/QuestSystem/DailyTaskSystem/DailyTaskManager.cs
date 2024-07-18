@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,9 @@ public class DailyTaskManager : MonoBehaviour
     private const int MaxEasyDailyTasks = 3;
     private const int MaxHardDailyTasks = 2;
 
-    private void Start()
+    public List<DailyTask> DailyTasks { get => _dailyTasks; set => _dailyTasks = value; }
+
+    private void Awake()
     {
         InitTempLists();
 
@@ -77,6 +78,5 @@ public class DailyTaskManager : MonoBehaviour
 
         if (fullComplited)
             _characterRewardGetter.GetMoney(_generalMoneyReward);
-
     }
 }

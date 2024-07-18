@@ -151,7 +151,9 @@ public class BuildingsGrid : MonoBehaviour
 
     public void StopCraft()
     {
-        _flyingBuilding.gameObject.SetActive(false);
+        if (_flyingBuilding != null)
+            _flyingBuilding.gameObject.SetActive(false);
+
         _flyingBuilding = null;
     }
 }

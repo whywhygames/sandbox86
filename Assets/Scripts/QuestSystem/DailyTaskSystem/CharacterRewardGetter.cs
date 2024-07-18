@@ -1,6 +1,5 @@
 using CoverShooter;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,12 +12,10 @@ public class CharacterRewardGetter : MonoBehaviour
     [SerializeField] private Gun _azotBlasterGetter; 
     [SerializeField] private Gun _sniperGetter;
 
-    public void TakeReward(List<TaskReward> rewards)
+    public void TakeReward(TaskReward reward)
     {
-        foreach (var reward in rewards)
-        {
-            GiveReward(reward);
-        }
+        
+        GiveReward(reward);
     }
 
     private void GiveReward(TaskReward reward)
