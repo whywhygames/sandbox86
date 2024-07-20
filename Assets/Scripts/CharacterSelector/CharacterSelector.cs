@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using TouchControlsKit;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CharacterSelector : MonoBehaviour
 {
@@ -10,13 +10,12 @@ public class CharacterSelector : MonoBehaviour
     [SerializeField] private List<CharacterViewConfigure> _configuresButtons = new List<CharacterViewConfigure>();
     [SerializeField] private CharacterSelectButton _burronPrefab;
     [SerializeField] private Transform _container;
-   // [SerializeField] private Image _ñharacterImage;
     [SerializeField] private CanvasGroup _canvasGroup;
-   // [SerializeField] private Button _selectCharacterButton;
-   // [SerializeField] private TMP_Text _selectCharacterButtonText;
 
     private List<CharacterSelectButton> _selectButtons = new List<CharacterSelectButton>();
     private CharacterType _currentSelectCharacter;
+
+    public event UnityAction ChangeCharacter;
 
     private void Start()
     {
@@ -51,8 +50,6 @@ public class CharacterSelector : MonoBehaviour
 
     private void SetCharacter()
     {
-       // _selectCharacterButtonText.text = "YOU";
-       // _selectCharacterButton.interactable = false;
         _playerBootstrap.SetCharater(_currentSelectCharacter);
     }
 
@@ -67,23 +64,12 @@ public class CharacterSelector : MonoBehaviour
     public void OnClickHandler(CharacterType characterType)
     {
         _currentSelectCharacter = characterType;
-        // _playerBootstrap.SetCharater(characterType);
 
-        if (_playerBootstrap.Type == _currentSelectCharacter)
-        {
-           // _selectCharacterButtonText.text = "YOU";
-           // _selectCharacterButton.interactable = false;
-        }
-        else
+        if (_playerBootstrap.Type != _currentSelectCharacter)
         {
             _playerBootstrap.SetCharater(_currentSelectCharacter);
-            //_selectCharacterButtonText.text = "SELECT";
-           // _selectCharacterButton.interactable = true;
+            ChangeCharacter?.Invoke();
         }
-
-      /*  foreach (var configureButton in _configuresButtons)
-            if (configureButton.CharacterType == characterType)
-                _ñharacterImage.sprite = configureButton.IconCharacter;*/
     }
 
     private void Open()

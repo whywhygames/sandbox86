@@ -21,6 +21,8 @@ public class EnemyHealth : MonoBehaviour
 
     public event UnityAction<HitType, EnemyType> Died;
     public event UnityAction<EnemyHealth> Daying;
+    public event UnityAction DayingFreez;
+    public event UnityAction Freezed;
 
     private void Start()
     {
@@ -36,7 +38,10 @@ public class EnemyHealth : MonoBehaviour
 
     public void OnHit(Hit hit)
     {
-        TakeDamage(hit.Damage, hit.Type); 
+        if (_enemyMovement.IsFreez)
+            TakeDamage(hit.Damage * 2.5f, hit.Type);
+        else
+            TakeDamage(hit.Damage, hit.Type); 
     }
 
     public void TakeDamage(float damage, HitType hitType)
@@ -49,8 +54,14 @@ public class EnemyHealth : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
+            if (_enemyMovement.IsFreez)
+            {
+                DayingFreez?.Invoke();
+            }
+
             IsDied = true;
             Died?.Invoke(hitType, _enemyType);
+            _animator.SetBool("IsStop", false);
             _animator.SetTrigger("Death");
             Daying?.Invoke(this);
         }
@@ -60,6 +71,10 @@ public class EnemyHealth : MonoBehaviour
     {
         _currentHealth = _maxHealth;
         gameObject.SetActive(false);
+    }
 
+    public void Freez()
+    {
+        Freezed?.Invoke();
     }
 }

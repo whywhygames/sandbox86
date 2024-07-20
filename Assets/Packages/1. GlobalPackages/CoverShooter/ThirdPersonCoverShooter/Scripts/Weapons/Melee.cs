@@ -75,6 +75,7 @@ namespace CoverShooter
                 case WeaponType.Sniper: type = HitType.SniperMelee; break;
                 case WeaponType.Fist: type = HitType.Fist; break;
                 case WeaponType.Machete: type = HitType.Machete; break;
+                case WeaponType.AzotBlaster: type = HitType.AzotBlasterMelee; break;
 
                 default:
                     type = HitType.Fist;

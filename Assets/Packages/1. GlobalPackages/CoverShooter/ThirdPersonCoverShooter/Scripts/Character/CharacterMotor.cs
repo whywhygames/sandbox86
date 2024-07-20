@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CoverShooter
 {
@@ -4872,6 +4873,7 @@ namespace CoverShooter
                     case WeaponType.Rifle: return 2;
                     case WeaponType.Shotgun: return 2;
                     case WeaponType.Sniper: return 2;
+                    case WeaponType.AzotBlaster: return 2;
 
                     default:
                         Debug.Assert(false, "Invalid gun type!");
@@ -4916,6 +4918,7 @@ namespace CoverShooter
                     case WeaponType.Rifle: return 2;
                     case WeaponType.Shotgun: return 2;
                     case WeaponType.Sniper: return 2;
+                    case WeaponType.AzotBlaster: return 2;
                     case WeaponType.Fist: return 3;
                     case WeaponType.Machete: return 4;
 
@@ -5758,6 +5761,7 @@ namespace CoverShooter
             }
         }
 
+        public event UnityAction Jump;
         private void updateVertical()
         {
             if (_jumpTimer < 999) _jumpTimer += Time.deltaTime;
@@ -5774,7 +5778,10 @@ namespace CoverShooter
                 if (_nextJumpTimer > -float.Epsilon) _nextJumpTimer -= Time.deltaTime;
 
                 if (!_cover.In && !_isClimbing && !_isJumping && _nextJumpTimer < float.Epsilon && _wantsToJump)
+                {
                     _isIntendingToJump = true;
+                    Jump?.Invoke();
+                }
             }
             else if (_body.velocity.y < -5)
                 _isJumping = false;
@@ -5970,6 +5977,19 @@ namespace CoverShooter
                         }
                         break;
 
+                    case WeaponType.AzotBlaster:
+                        if (EquippedWeapon.Shield != null)
+                        {
+                            body = 3;
+                            variant = 1;
+                        }
+                        else
+                        {
+                            body = 2;
+                            variant = _wantsToScope ? 1 : 0;
+                        }
+                        break;
+
                     default:
                         body = 0;
                         variant = 0;
@@ -6028,6 +6048,19 @@ namespace CoverShooter
                         break;
 
                     case WeaponType.Sniper:
+                        if (EquippedWeapon.Shield != null)
+                        {
+                            body = 3;
+                            variant = 1;
+                        }
+                        else
+                        {
+                            body = 2;
+                            variant = 0;
+                        }
+                        break;
+
+                    case WeaponType.AzotBlaster:
                         if (EquippedWeapon.Shield != null)
                         {
                             body = 3;

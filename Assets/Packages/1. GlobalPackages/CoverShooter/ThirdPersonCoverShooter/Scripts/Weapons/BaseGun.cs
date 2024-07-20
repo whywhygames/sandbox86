@@ -1027,6 +1027,7 @@ namespace CoverShooter
                     case WeaponType.Rifle: type = HitType.Rifle; break;
                     case WeaponType.Shotgun: type = HitType.Shotgun; break;
                     case WeaponType.Sniper: type = HitType.Sniper; break;
+                    case WeaponType.AzotBlaster: type = HitType.AzotBlaster; break;
 
                     default:
                         type = HitType.Pistol;

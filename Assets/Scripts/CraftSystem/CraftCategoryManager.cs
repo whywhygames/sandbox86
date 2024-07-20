@@ -40,8 +40,12 @@ public class CraftCategoryManager : MonoBehaviour
 
     public void Setup()
     {
-        _openPanel.Close();
-        _openPanel = null;
+        if (_openPanel != null)
+        {
+            _openPanel.Close();
+            _openPanel = null;
+        }
+
         _categoryPanel.Activate();
         _backToCategoryButton.Deactivate();
     }

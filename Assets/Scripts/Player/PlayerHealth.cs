@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int CurrentHealth { get; private set; }
 
     public event UnityAction<int> ChangeHealth;
+    public event UnityAction Died;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             transform.position = _startPoint.position;
+            Died?.Invoke();
             Setup();
         }
     }

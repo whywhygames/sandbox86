@@ -13,6 +13,7 @@ public class CharacterJumpMover : MonoBehaviour
 
     private bool _isJump;
     Vector2 move;
+    Vector2 _previousAxis;
 
     public bool IsJump { get => _isJump; private set => _isJump = value; }
 
@@ -21,15 +22,23 @@ public class CharacterJumpMover : MonoBehaviour
         IsJump = !Physics.CheckSphere(_legs.position, _radius / 10, _groundMask);
 
         if (IsJump == false)
+        {
             move = Vector2.zero;
+            _previousAxis = TCKInput.GetAxis(InputParametrs.Joystick); 
+        }
     }
 
     private void LateUpdate()
     {
         if (IsJump)
         {
-            Debug.Log(move.magnitude);
             move = TCKInput.GetAxis(InputParametrs.Joystick);
+
+            if (_previousAxis.magnitude > 0.3)
+            {
+                move /= 10;
+            }
+
             if (move.magnitude > 0.3)
             {
                 _rigidbody.velocity = new Vector3(transform.forward.x * Mathf.Abs(move.normalized.magnitude) * _speed, _rigidbody.velocity.y, transform.forward.z * Mathf.Abs(move.normalized.magnitude) * _speed);

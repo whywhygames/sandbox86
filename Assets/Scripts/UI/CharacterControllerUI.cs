@@ -52,6 +52,12 @@ public class CharacterControllerUI : MonoBehaviour
                     _closeZoomButton.Activate();
                     break;
 
+                case WeaponType.AzotBlaster:
+                    _fireButton.Activate();
+                    _reloadButton.Activate();
+                    _closeZoomButton.Activate();
+                    break;
+
                 case WeaponType.Fist:
                     _fireButton.Activate();
                     _closeZoomButton.Deactivate();

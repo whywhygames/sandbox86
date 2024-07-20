@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 
 public class EnemyMovement : MonoBehaviour
@@ -11,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private PlayerHealth _target;
     [SerializeField] private Animator _animator;
     [SerializeField] private EnemyHealth _health;
+    [SerializeField] private FreezController _freezController;
 
     [Header("Patrul")]
     [SerializeField] private float _followDistance;
@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour
     private float _elepsedTimeAttackPause;
 
     [Header("Patrul")]
-    [SerializeField] private SphereCollider _patrulField;
+    [SerializeField] private PatrulField _patrulField;
     [SerializeField] private float _waitTimeMin;
     [SerializeField] private float _waitTimeMax;
     [SerializeField] private float _patrulDistance;
@@ -42,6 +42,24 @@ public class EnemyMovement : MonoBehaviour
     private float _readyToPatrulTime;
     private float _readyToPatrulElepsedTime;
     private float _elepsedWaitTime;
+
+    private bool _isFreez;
+
+    public event UnityAction Freezed;
+
+    public bool IsFreez { get => _isFreez; set => _isFreez = value; }
+
+    private void OnEnable()
+    {
+        _freezController.Freezing += OnFreez;
+        _freezController.Defreezing += OnDefreez;
+    }
+
+    private void OnDisable()
+    {
+        _freezController.Freezing -= OnFreez;
+        _freezController.Defreezing -= OnDefreez;
+    }
 
     private void Start()
     {
@@ -55,6 +73,9 @@ public class EnemyMovement : MonoBehaviour
             _agent.isStopped = true;
             return;
         }
+
+        if (IsFreez)
+            return;
 
         if (Vector3.Distance(transform.position, _target.transform.position) < _followDistance || _isAttacked)
         {
@@ -85,7 +106,7 @@ public class EnemyMovement : MonoBehaviour
         _readyToPatrulTime = _waitTime + Random.Range(_waitTimeMin, _waitTimeMax);
         _animator.SetBool("Walk", true);
         _isAttacked = false;
-
+        IsFreez = false;
         GetRandomPoint();
     }
 
@@ -184,10 +205,26 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector3 GetRandomPoint()
     {
-        Vector3 randomPointInCircle = Random.insideUnitSphere * _patrulField.radius;
+        Vector3 randomPointInCircle = Random.insideUnitSphere * _patrulField.Radius;
         _randomPoint = randomPointInCircle + _patrulField.transform.position;
         _randomPoint.y = 0;
 
         return _randomPoint;
+    }
+
+    private void OnFreez()
+    {
+        IsFreez = true;
+        _agent.isStopped = true;
+        _animator.SetBool("IsStop", true);
+        Freezed?.Invoke();
+        _health.Freez();
+    }
+
+    private void OnDefreez()
+    {
+        IsFreez = false;
+        _agent.isStopped = false;
+        _animator.SetBool("IsStop", false);
     }
 }

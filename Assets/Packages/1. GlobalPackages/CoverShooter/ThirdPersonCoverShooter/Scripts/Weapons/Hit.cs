@@ -15,7 +15,9 @@ namespace CoverShooter
         ShotgunMelee,
         SniperMelee,
         Explosion, 
-        Mine
+        Mine,
+        AzotBlaster, 
+        AzotBlasterMelee
     }
 
     /// <summary>

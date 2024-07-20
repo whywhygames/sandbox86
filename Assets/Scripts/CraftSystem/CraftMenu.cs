@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using CoverShooter;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +11,7 @@ public class CraftMenu : MonoBehaviour
     [SerializeField] private BuildingsGrid _buildingGrid;
     [SerializeField] private Button _button;
     [SerializeField] private TMP_Text _text;
+    [SerializeField] private ThirdPersonController _controller;
 
     private bool _isOpen;
 
@@ -38,6 +38,7 @@ public class CraftMenu : MonoBehaviour
         }
         else
         {
+            _controller.ZoomInput = false;
             _isOpen = true;
             _weaponPanel.Deactivate();
             _craftPanel.Activate();

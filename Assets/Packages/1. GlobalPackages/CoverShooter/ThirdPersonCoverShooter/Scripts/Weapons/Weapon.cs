@@ -15,7 +15,8 @@ namespace CoverShooter
         Shotgun,
         Sniper,
         Fist,
-        Machete
+        Machete, 
+        AzotBlaster
     }
 
     /// <summary>

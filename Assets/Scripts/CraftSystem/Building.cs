@@ -18,23 +18,13 @@ public class Building : MonoBehaviour
     [SerializeField] private Transform _cubePoint;
     public bool CanPut { get; private set; }
 
-    public void SetTransparent(bool available)
-    {
-        /*if (available)
-        {
-            MainRenderer.material = _posibleMaterial;
-        }
-        else
-        {
-            MainRenderer.material = _imposibleMaterial;
-        }*/
-    }
+    private bool _isAvailabilityForLenght;
 
     private void Update()
     {
         Collider[] hits = Physics.OverlapBox(_cubePoint.position, _cubeScale, transform.rotation, _layerMask);
 
-        if (hits.Length > 0)
+        if (hits.Length > 0 || _isAvailabilityForLenght == false)
         {
             MainRenderer.material = _imposibleMaterial;
 
@@ -46,6 +36,11 @@ public class Building : MonoBehaviour
 
             CanPut = true;
         }
+    }
+
+    public void ChangeАvailability(bool isAvailability)
+    {
+        _isAvailabilityForLenght = isAvailability;
     }
 
     private void OnDrawGizmos()

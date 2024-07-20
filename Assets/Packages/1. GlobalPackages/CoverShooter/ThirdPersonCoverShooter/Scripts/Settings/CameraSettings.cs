@@ -84,6 +84,7 @@ namespace CoverShooter
         public CameraState ZoomRifle;
         public CameraState ZoomSniper;
         public CameraState ZoomShotgun;
+        public CameraState ZoomAzotBlaster;
 
         /// <summary>
         /// Camera state to use when the character is aiming from a corner in low cover and using zoom.

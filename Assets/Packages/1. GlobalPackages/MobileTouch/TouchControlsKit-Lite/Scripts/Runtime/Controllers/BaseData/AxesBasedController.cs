@@ -37,7 +37,7 @@ namespace TouchControlsKit
         [Label( "Lag" )]
         public bool axesLag = false;
 
-        [Range( 5f, 25f )]
+        [Range( 5f, 100f )]
         public float axesLagSpeed = 10f;
 
         [Label( "X - [ Horizontal ]" )]
@@ -138,10 +138,13 @@ namespace TouchControlsKit
             }
 
             axisX.SetValue( targetValue );
+          //  yield return null;
+            
         }
         // Smooth AxisY
         private IEnumerator SmoothAxisY( float targetValue )
         {
+           
             while( Math.Round( ( double )axisY.value, Axis.DIGITS ) != Math.Round( ( double )targetValue, Axis.DIGITS ) )
             {
                 axisY.SetValue( Mathf.Lerp( axisY.value, targetValue, Time.smoothDeltaTime * axesLagSpeed ) );
@@ -149,6 +152,7 @@ namespace TouchControlsKit
             }
 
             axisY.SetValue( targetValue );
+           // yield return null;
         }
 
         // Control Reset

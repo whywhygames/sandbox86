@@ -12,6 +12,7 @@ public class Laser : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSound;
     [SerializeField] private BaseGun _gun;
+    [SerializeField] private GameObject _newLaser;
 
     [Header ("Reload Parametrs")]
     [SerializeField] private float _delay;
@@ -41,7 +42,8 @@ public class Laser : MonoBehaviour
                    _audioSource.Play();
                 }
 
-                _laser.SetActive(true);
+                //_laser.SetActive(true);
+                _newLaser.SetActive(true);
 
                 RaycastHit hit;
 
@@ -63,7 +65,8 @@ public class Laser : MonoBehaviour
             }
             else if (TCKInput.GetButtonUp(InputParametrs.Fire) || _gun.IsAllowed == false || _gunForBullet.LoadedBullets <= 0)
             {
-                _laser.SetActive(false);
+                // _laser.SetActive(false);
+                _newLaser.SetActive(false);
                 _audioSource.Stop();
             }
         }

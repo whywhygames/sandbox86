@@ -2,6 +2,7 @@
 using System.Collections;
 using TouchControlsKit;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CoverShooter
 {
@@ -373,6 +374,7 @@ namespace CoverShooter
 
             if (TCKInput.GetAction(InputParametrs.SelectCraft, EActionEvent.Down))
             {
+                    Debug.Log("34567");
                 if (_controller.ZoomInput)
                 {
                     _controller.ZoomInput = false;
@@ -733,6 +735,11 @@ namespace CoverShooter
 
         private void GetAxis(ref float h, ref float v)
         {
+            if (TCKInput.GetAction(InputParametrs.Joystick, EActionEvent.Press))
+            {
+                Debug.Log(13456543);
+            }
+
             Vector2 move = TCKInput.GetAxis(InputParametrs.Joystick);
 
             if (Input.GetAxis("Horizontal") != 0)

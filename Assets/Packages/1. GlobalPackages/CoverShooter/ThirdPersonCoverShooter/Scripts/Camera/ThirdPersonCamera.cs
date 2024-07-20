@@ -502,6 +502,10 @@ namespace CoverShooter
                         case WeaponType.Sniper:
                             state = States.ZoomSniper;
                             break;
+
+                        case WeaponType.AzotBlaster:
+                            state = States.ZoomAzotBlaster;
+                            break;
                     }
 
                 }

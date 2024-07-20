@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TouchControlsKit;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BuildingsGrid : MonoBehaviour
 {
@@ -25,6 +24,8 @@ public class BuildingsGrid : MonoBehaviour
     private Ray _ray;
 
     private List<Building> _poolCreatedObjects = new List<Building>();
+
+    public event UnityAction<Building> Craft;
 
     private void Awake()
     {
@@ -59,6 +60,7 @@ public class BuildingsGrid : MonoBehaviour
                 if (Vector3.Distance(_mainCamera.transform.position, _hit.point) > _maxDistance)
                 {
                     _newPosition = _ray.GetPoint(_maxDistance);
+
                 }
 
                 _flyingBuilding.transform.position = _newPosition;
@@ -79,6 +81,8 @@ public class BuildingsGrid : MonoBehaviour
                 int y = Mathf.RoundToInt(_hit.point.y);
                 int z = Mathf.RoundToInt(_hit.point.z);
 
+                bool available = true;
+
                 if (Vector3.Distance(_mainCamera.transform.position, _hit.point) > _maxDistance)
                 {
                     x = Mathf.RoundToInt(_ray.GetPoint(_maxDistance).x);
@@ -86,19 +90,14 @@ public class BuildingsGrid : MonoBehaviour
                     z = Mathf.RoundToInt(_ray.GetPoint(_maxDistance).z);
                 }
 
-                bool available = true;
-
-                if (x < 0 || x > GridSize.x - _flyingBuilding.Size.x) available = false;
-                if (z < 0 || z > GridSize.y - _flyingBuilding.Size.y) available = false;
-
-                if (available && _flyingBuilding.CanPut == false) available = false;
+                _flyingBuilding.ChangeАvailability(available);
 
                 _newPosition = new Vector3(x, y, z);
 
                 _flyingBuilding.transform.position = Vector3.Lerp(_flyingBuilding.transform.position, _newPosition, _speed * Time.deltaTime);
-                _flyingBuilding.SetTransparent(available);
+              
 
-                if (available && TCKInput.GetAction(InputParametrs.CraftSystem.Craft, EActionEvent.Down)) 
+                if (_flyingBuilding.CanPut && TCKInput.GetAction(InputParametrs.CraftSystem.Craft, EActionEvent.Down)) 
                 {
                     PlaceFlyingBuilding(x, z, _newPosition);
                 }
@@ -114,39 +113,14 @@ public class BuildingsGrid : MonoBehaviour
         {
             _targetRotation = new Vector3(_flyingBuilding.transform.eulerAngles.x, (_flyingBuilding.transform.eulerAngles.y + 90), _flyingBuilding.transform.eulerAngles.z);
             _flyingBuilding.transform.eulerAngles = _targetRotation;
-          //  flyingBuilding.transform.eulerAngles = Vector3.Lerp(flyingBuilding.transform.eulerAngles, _targetRotation, _speed * Time.deltaTime);
         }
 
     }
 
-    /* private bool IsPlaceTaken(int placeX, int placeY)
-     {
-
-
-         for (int x = 0; x < flyingBuilding.Size.x; x++)
-         {
-             for (int y = 0; y < flyingBuilding.Size.y; y++)
-             {
-                 if (grid[placeX + x, placeY + y] != null) return true;
-             }
-         }
-
-         return false;
-     }*/
-
     private void PlaceFlyingBuilding(int placeX, int placeY, Vector3 newPosition)
     {
-        for (int x = 0; x < _flyingBuilding.Size.x; x++)
-        {
-            for (int y = 0; y < _flyingBuilding.Size.y; y++)
-            {
-                _grid[placeX + x, placeY + y] = _flyingBuilding;
-            }
-        }
-
-        //   flyingBuilding.SetNormal();
         Instantiate(_flyingBuilding.Prefab, newPosition, _flyingBuilding.transform.rotation);
-      //  flyingBuilding = null;
+        Craft?.Invoke(_flyingBuilding);
     }
 
     public void StopCraft()
