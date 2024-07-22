@@ -1,18 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CraftFiveItemsForCharacter : DailyTask
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private CharacterType _targetCaharacterType;
+    [SerializeField] private PlayerBootstrap _player;
+
+    private BuildingsGrid _buildingsGrid;
+
+    private void OnEnable()
     {
-        
+        _buildingsGrid = FindObjectOfType<BuildingsGrid>();
+        _player = FindObjectOfType<PlayerBootstrap>();
+        _buildingsGrid.Craft += OnCraft;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        _buildingsGrid.Craft -= OnCraft;
+    }
+
+    private void OnCraft(Building craftObject)
+    {
+        if (IsCompleted)
+            return;
+       
+        if (_player.Type == _targetCaharacterType)
+        {
+            AddCounter(1);
+
+            if (CurrentCount == TargerCount)
+                GiveReward();
+        }
     }
 }

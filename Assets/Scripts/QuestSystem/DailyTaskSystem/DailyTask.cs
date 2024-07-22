@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class DailyTask : MonoBehaviour
 {
+    [field: SerializeField] public int Index { get; private set; }
+
     [SerializeField] private TaskReward _reward;
 
     [field: SerializeField] public float TargerCount { get; set; }
@@ -18,6 +18,7 @@ public abstract class DailyTask : MonoBehaviour
 
     public event UnityAction Completed;
     public event UnityAction<float, float> ChangedCounter;
+    public event UnityAction<int> ChangingCounter;
 
 
     public void Initialize(CharacterRewardGetter rewardGetter)
@@ -36,11 +37,21 @@ public abstract class DailyTask : MonoBehaviour
     {
         CurrentCount += value;
         ChangedCounter?.Invoke(TargerCount, CurrentCount);
+        ChangingCounter?.Invoke(Index);
     }
 
-    protected void ChangeEquelCounter(float value)
+    public void ChangeEquelCounter(float value)
     {
         CurrentCount = value;
         ChangedCounter?.Invoke(TargerCount, CurrentCount);
+        ChangingCounter?.Invoke(Index);
+    }
+
+    public void CheckComplited()
+    {
+        if (CurrentCount >= TargerCount)
+        {
+            Completed?.Invoke();
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ThirdPersonCamera;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerBootstrap : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PlayerBootstrap : MonoBehaviour
     [field: SerializeField] public CharacterType Type = CharacterType.Bom;
 
     private CharacterConfigure _currentCharacter;
+
+    public event UnityAction ChangeCharacter;
 
     private void Start()
     {
@@ -30,6 +33,7 @@ public class PlayerBootstrap : MonoBehaviour
             }
         }
 
+        ChangeCharacter?.Invoke();
         _currentCharacter = GetCharacter(characterType);
 
         _skinnedMeshRenderer.sharedMesh = _currentCharacter.Mesh;

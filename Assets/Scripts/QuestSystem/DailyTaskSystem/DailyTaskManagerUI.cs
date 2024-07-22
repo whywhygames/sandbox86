@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DailyTaskManagerUI : MonoBehaviour
@@ -9,7 +10,30 @@ public class DailyTaskManagerUI : MonoBehaviour
 
     private List<DayliTaskCard> _allCards = new List<DayliTaskCard>();
 
-    private void Start()
+    private void OnEnable()
+    {
+        _taskManager.FillTaskList += OnFillTaskList;
+        _taskManager.NewDayStarted += NewDayStarted;
+    }
+
+    private void OnDisable()
+    {
+        _taskManager.FillTaskList -= OnFillTaskList;
+        _taskManager.NewDayStarted -= NewDayStarted;
+    }
+
+    private void NewDayStarted()
+    {
+        if (_allCards.Count > 0)
+            foreach (DayliTaskCard card in _allCards)
+            {
+                Destroy(card.gameObject);
+            }
+
+        _allCards.Clear();
+    }
+
+    private void OnFillTaskList()
     {
         foreach (DailyTask task in _taskManager.DailyTasks)
         {

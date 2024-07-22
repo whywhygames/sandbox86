@@ -596,6 +596,8 @@ namespace CoverShooter
             }
         }
 
+        public event UnityAction ChangeWeapon;
+
         private void inputWeapon(int index)
         {
             if (_inventory == null && index > 0)
@@ -604,7 +606,10 @@ namespace CoverShooter
             if (index <= 0 || (_inventory != null && index > _inventory.Weapons.Length))
                 _controller.InputUnequip();
             else if (_inventory != null && index <= _inventory.Weapons.Length)
+            {
+                ChangeWeapon?.Invoke();
                 _controller.InputEquip(_inventory.Weapons[index - 1]);
+            }
         }
 
         protected virtual void UpdateReload()

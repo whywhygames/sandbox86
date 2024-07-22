@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class UseGrenade : DailyTask
 {
-    // Start is called before the first frame update
-    void Start()
+    private GrenadeInventoryCounter _grenadeSpawner;
+
+    private void OnEnable()
     {
-        
+        _grenadeSpawner = FindObjectOfType<GrenadeInventoryCounter>();
+        _grenadeSpawner.GrenadSpawned += OnMineSpawned;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        _grenadeSpawner.GrenadSpawned -= OnMineSpawned;
+    }
+
+    private void OnMineSpawned()
+    {
+        if (IsCompleted)
+            return;
+
+        AddCounter(1);
+
+        if (CurrentCount == TargerCount)
+            GiveReward();
     }
 }

@@ -6,18 +6,16 @@ public class RunMetersForWeapon : DailyTask
     [SerializeField] private WeaponType _targetWeaponType;
 
     private CharacterMotor _characterMotor;
+    private ThirdPersonInput _thirdPersonInput;
     private Vector3 _oldPosition;
     private Vector3 _currentPosition;
     private Vector3 _startPosition;
-    private float _distanceX = 0;
-    private float _distanceZ = 0;
-
-
 
     private void Start()
     {
         _characterMotor = FindAnyObjectByType<CharacterMotor>();
-        _startPosition = _characterMotor.transform.position;
+        _thirdPersonInput = FindAnyObjectByType<ThirdPersonInput>();
+        _thirdPersonInput.ChangeWeapon += OnChangeWeapon;
     }
 
     private void Update()
@@ -44,18 +42,19 @@ public class RunMetersForWeapon : DailyTask
 
             _oldPosition = _currentPosition;
 
-            _distanceX += tmpDistX;
-            _distanceZ += tmpDistZ;
-
-            if (tmpDistX == 0 && tmpDistZ > 0) { _distanceX = 0; }
-            if (tmpDistX > 0 && tmpDistZ == 0) { _distanceZ = 0; }
-
-            ChangeEquelCounter(_distanceX + _distanceZ);
+            AddCounter(tmpDistX + tmpDistZ);
 
             if (CurrentCount >= TargerCount)
             {
                 GiveReward();
             }
         }
+    }
+
+    private void OnChangeWeapon()
+    {
+        _startPosition = _characterMotor.transform.position;
+        _currentPosition = _startPosition - _characterMotor.transform.position;
+        _oldPosition = _currentPosition;
     }
 }

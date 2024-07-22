@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class UseMine : DailyTask
 {
-    // Start is called before the first frame update
-    void Start()
+    private MineSpawner _mineSpawner;
+
+    private void OnEnable()
     {
-        
+        _mineSpawner = FindObjectOfType<MineSpawner>();
+        _mineSpawner.MineSpawned += OnMineSpawned;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        _mineSpawner.MineSpawned -= OnMineSpawned;
+    }
+
+    private void OnMineSpawned()
+    {
+        if (IsCompleted)
+            return;
+
+        AddCounter(1);
+
+        if (CurrentCount == TargerCount)
+            GiveReward();
     }
 }

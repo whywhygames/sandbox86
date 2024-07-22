@@ -1,7 +1,4 @@
 using CoverShooter;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +9,7 @@ public class GrenadeInventoryCounter : MonoBehaviour
     [SerializeField] private ThirdPersonController _thirdPersonController;
 
     public event UnityAction ChangeCount;
+    public event UnityAction GrenadSpawned;
 
     public void OnEnable()
     {
@@ -27,6 +25,7 @@ public class GrenadeInventoryCounter : MonoBehaviour
     {
         CountGrenade--;
         ChangeCount?.Invoke();
+        GrenadSpawned?.Invoke();
     }
 
     public void AddMine(int count)
