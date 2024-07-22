@@ -478,12 +478,12 @@ namespace CoverShooter
                     WeaponType type = WeaponType.Sniper;
                     state = States.Zoom;
 
-                    if (!_cachedMotor.IsEquipped)
+                    var equipped = _cachedMotor.EquippedWeapon;
+
+                    if (equipped.Gun != null)
+                        type = equipped.Gun.Type;
+                    else
                         return;
-                    else if (_cachedMotor.Weapon.RightMelee != null)
-                        type = _cachedMotor.Weapon.RightMelee.Type;
-                    else if (_cachedMotor.Weapon.LeftMelee != null)
-                        type = _cachedMotor.Weapon.LeftMelee.Type;
 
                     switch (type)
                     {

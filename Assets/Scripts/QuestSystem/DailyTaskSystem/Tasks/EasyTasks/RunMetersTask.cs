@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class RunMetersTask : DailyTask
 {
-    [SerializeField] private CharacterMotor _charater;
-    
+    private CharacterMotor _charater;
     private Vector3 _oldPosition;
     private Vector3 _currentPosition;
     private Vector3 _startPosition;

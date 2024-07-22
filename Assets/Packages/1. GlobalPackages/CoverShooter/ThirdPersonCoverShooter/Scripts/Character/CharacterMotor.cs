@@ -2322,7 +2322,7 @@ namespace CoverShooter
             _weaponEquipState = WeaponEquipState.equipping;
             _isUnequippedButGoingToGrab = false;
 
-            _weaponGrabTimer = 0.35f;
+            _weaponGrabTimer = 0.01f;
 
             showEquippedWeapon(false);
 

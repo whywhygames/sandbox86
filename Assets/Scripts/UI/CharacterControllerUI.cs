@@ -26,6 +26,23 @@ public class CharacterControllerUI : MonoBehaviour
             else if (_characterMotor.Weapon.LeftMelee != null)
                 type = _characterMotor.Weapon.LeftMelee.Type;
 
+         /*   WeaponType type;
+            var equipped = _characterMotor.EquippedWeapon;*/
+
+            /*if (equipped.Gun != null)
+                type = equipped.Gun.Type;
+            else if (equipped.ToolType)
+                type = WeaponType.Fist;
+            else
+                return;*/
+
+            /*if (equipped.Tool != null)
+                type = equipped.;
+            else if (equipped.ToolType)
+                type = WeaponType.Fist;
+            else
+                return;*/
+
             switch (type)
             {
                 case WeaponType.Pistol:
