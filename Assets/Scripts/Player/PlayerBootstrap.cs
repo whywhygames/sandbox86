@@ -39,7 +39,7 @@ public class PlayerBootstrap : MonoBehaviour
 
         _skinnedMeshRenderer.sharedMesh = _currentCharacter.Mesh;
         _material.mainTexture = _currentCharacter.Texture;
-        _animator.runtimeAnimatorController = _currentCharacter.Animator;
+       // _animator.runtimeAnimatorController = _currentCharacter.Animator;
         Type = characterType;
     }
 
