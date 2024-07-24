@@ -26,7 +26,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _attackPause;
     [SerializeField] private int _damage;
     [SerializeField] private float _attackDistance;
+    [SerializeField] private float _delay;
 
+    private float _elapsedTime = float.MaxValue;
     private float _elepsedTimeAttackPause;
 
     [Header("Patrul")]
@@ -127,10 +129,16 @@ public class EnemyMovement : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, _target.transform.position) < _attackDistance)
         {
-            transform.LookAt(_target.transform.position);
-            _animator.SetTrigger("Attack");
-            _isFollow = false;
-            _agent.isStopped = true;
+            _elapsedTime += Time.deltaTime;
+
+            if (_elapsedTime >= _delay)
+            {
+                transform.LookAt(_target.transform.position);
+                _animator.SetTrigger("Attack");
+                _isFollow = false;
+                _agent.isStopped = true;
+                _elapsedTime = 0;
+            }
         }
         else
         {

@@ -15,8 +15,6 @@ public class DailyTaskManager : MonoBehaviour
     [SerializeField] private Transform _taskContainer;
     [SerializeField] private CharacterRewardGetter _characterRewardGetter;
 
-    public TMP_Text _textDELETE;
-
     private List<DailyTask> _tempEasyTasks = new List<DailyTask>();
     private List<DailyTask> _tempHardTasks = new List<DailyTask>();
 
@@ -73,10 +71,6 @@ public class DailyTaskManager : MonoBehaviour
 
     private void Update()
     {
-        int hourse = Mathf.FloorToInt((float)(DateTime.Today.AddDays(1) - DateTime.Now).TotalHours);
-        int minutes = Mathf.FloorToInt((float)(DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes) % 60;
-        _textDELETE.text = $"{hourse}:{minutes}";
-
         _elapsedSaveTime += Time.deltaTime;
 
         if (_elapsedSaveTime >= _saveDelay)

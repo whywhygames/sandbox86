@@ -1,5 +1,6 @@
 ﻿public enum CharacterType
 {
-    Bom, 
-    Gop
+    Assasin, 
+    Technician,
+    Cowboy
 }

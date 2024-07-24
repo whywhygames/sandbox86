@@ -1,3 +1,4 @@
+using CoverShooter;
 using System.Collections.Generic;
 using UnityEngine;
 

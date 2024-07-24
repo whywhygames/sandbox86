@@ -11,8 +11,9 @@ public class PlayerBootstrap : MonoBehaviour
     [SerializeField] private List<CharacterConfigure> _characters;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
     [SerializeField] private Material _material;
+    [SerializeField] private Animator _animator;
 
-    [field: SerializeField] public CharacterType Type = CharacterType.Bom;
+    [field: SerializeField] public CharacterType Type = CharacterType.Assasin;
 
     private CharacterConfigure _currentCharacter;
 
@@ -38,6 +39,7 @@ public class PlayerBootstrap : MonoBehaviour
 
         _skinnedMeshRenderer.sharedMesh = _currentCharacter.Mesh;
         _material.mainTexture = _currentCharacter.Texture;
+        _animator.runtimeAnimatorController = _currentCharacter.Animator;
         Type = characterType;
     }
 
