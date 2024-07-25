@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class DogWeapon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Animator _animator;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private List<AudioClip> _clips = new List<AudioClip>();
+
+    private Transform _target;
+
+    public void Open()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Fire()
     {
-        
+
+    }
+
+    public void Close()
+    {
+
     }
 }

@@ -10,7 +10,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private PlayerHealth _target;
     [SerializeField] private Animator _animator;
     [SerializeField] private EnemyHealth _health;
-    [SerializeField] private FreezController _freezController;
+    [SerializeField] private FreezController _freezController; 
+    
+    private NavMeshPath _navMeshPath;
 
     [Header("Patrul")]
     [SerializeField] private float _followDistance;
@@ -65,6 +67,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        _navMeshPath = new NavMeshPath();
         Respawn();
     }
 
@@ -213,9 +216,26 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector3 GetRandomPoint()
     {
-        Vector3 randomPointInCircle = Random.insideUnitSphere * _patrulField.Radius;
-        _randomPoint = randomPointInCircle + _patrulField.transform.position;
-        _randomPoint.y = 0;
+        /*  Vector3 randomPointInCircle = Random.insideUnitSphere * _patrulField.Radius;
+          _randomPoint = randomPointInCircle + _patrulField.transform.position;
+          _randomPoint.y = 0;
+
+          return _randomPoint;*/
+
+        bool getCorrectPoint = false;
+
+        while (getCorrectPoint == false)
+        {
+            NavMeshHit navMeshHit;
+            NavMesh.SamplePosition(Random.insideUnitSphere * _patrulField.Radius + _patrulField.transform.position, out navMeshHit, _patrulField.Radius, NavMesh.AllAreas);
+
+            _randomPoint = navMeshHit.position;
+
+            _agent.CalculatePath(_randomPoint, _navMeshPath);
+
+            if (_navMeshPath.status == NavMeshPathStatus.PathComplete)
+                getCorrectPoint = true;
+        }
 
         return _randomPoint;
     }
