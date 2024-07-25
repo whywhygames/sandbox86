@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int CurrentHealth { get; private set; }
 
     public event UnityAction<int> ChangeHealth;
+    public event UnityAction HalfHealth;
     public event UnityAction Died;
 
     private void Start()
@@ -19,6 +20,11 @@ public class PlayerHealth : MonoBehaviour
     {
         CurrentHealth -= damage;
         ChangeHealth?.Invoke(CurrentHealth);
+
+        if (CurrentHealth < MaxHealth / 2)
+        {
+            HalfHealth?.Invoke();
+        }
 
         if (CurrentHealth <= 0)
         {

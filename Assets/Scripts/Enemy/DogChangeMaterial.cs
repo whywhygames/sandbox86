@@ -1,12 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BugChangeMaterial : MonoBehaviour
+public class DogChangeMaterial : MonoBehaviour
 {
     [SerializeField] private SkinnedMeshRenderer _meshRenedereBody;
-    [SerializeField] private SkinnedMeshRenderer _meshRenedereEye;
 
     [SerializeField] private Material[] _materalsBody;
-    [SerializeField] private Material[] _materalsEye;
 
     [SerializeField] private Material[] _freezMaterial;
 
@@ -28,14 +26,10 @@ public class BugChangeMaterial : MonoBehaviour
     private void OnDefreez()
     {
         _meshRenedereBody.materials = _materalsBody;
-
-        _meshRenedereEye.materials = _materalsEye;
     }
 
     private void OnFreez()
     {
         _meshRenedereBody.materials = _freezMaterial;
-
-        _meshRenedereEye.materials = _freezMaterial;
     }
 }

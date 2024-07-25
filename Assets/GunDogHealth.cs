@@ -14,8 +14,6 @@ public class GunDogHealth : MonoBehaviour
     [SerializeField] private float _currentHealth;
     [SerializeField] private Animator _animator;
 
-  //  [field: SerializeField] public float RespawnTime { get; private set; }
-
     public bool IsDied { get; private set; }
 
    // public event UnityAction<HitType, EnemyType> Died;
@@ -59,9 +57,11 @@ public class GunDogHealth : MonoBehaviour
             }
 
             IsDied = true;
-         //   Died?.Invoke(hitType, _enemyType);
-            _animator.SetBool("IsStop", false);
-            _animator.SetTrigger("Death");
+            //   Died?.Invoke(hitType, _enemyType);
+            _animator.SetInteger("ActionType_int", 0); 
+            _animator.SetFloat("Movement_f", 0); 
+            _animator.SetBool("AttackReady_b", false);
+            _animator.SetBool("Death_b", true);
             Daying?.Invoke();
         }
     }
