@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
             _jump = Input.GetButtonDown("Jump");
         }
 
-        if (TCKInput.GetAction(InputParametrs.Jump, EActionEvent.Down))
+        if (TCKInput.GetAction(InputParametrs.JumpBUTTON, EActionEvent.Down))
         {
             Jump();
         }

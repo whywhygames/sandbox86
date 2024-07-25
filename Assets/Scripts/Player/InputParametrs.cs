@@ -1,39 +1,39 @@
 ﻿public static class InputParametrs 
 {
     public static string Joystick = nameof(Joystick);
-    public static string Jump = nameof(Jump);
+    public static string JumpBUTTON = nameof(JumpBUTTON);
     public static string Touchpad = nameof(Touchpad);
-    public static string Fire = nameof(Fire);
-    public static string CloseZoom = nameof(CloseZoom);
-    public static string ChangeWeapon = nameof(ChangeWeapon);
-    public static string Reload = nameof(Reload);
-    public static string Weapon1 = nameof(Weapon1);
-    public static string Weapon2 = nameof(Weapon2);
-    public static string Weapon3 = nameof(Weapon3);
-    public static string Weapon4 = nameof(Weapon4);
-    public static string Weapon5 = nameof(Weapon5);
-    public static string Weapon6 = nameof(Weapon6);
-    public static string Mine = nameof(Mine);
-    public static string Grenade = nameof(Grenade);
-    public static string SelectCharacter = nameof(SelectCharacter);
-    public static string SelectCraft = nameof(SelectCraft);
-    public static string SelectShop = nameof(SelectShop);
-    public static string Settings = nameof(Settings);
+    public static string FireBUTTON = nameof(FireBUTTON);
+    public static string CloseZoomBUTTON = nameof(CloseZoomBUTTON);
+    public static string ChangeWeaponBUTTON = nameof(ChangeWeaponBUTTON);
+    public static string ReloadBUTTON = nameof(ReloadBUTTON);
+    public static string Weapon1BUTTON = nameof(Weapon1BUTTON);
+    public static string Weapon2BUTTON = nameof(Weapon2BUTTON);
+    public static string Weapon3BUTTON = nameof(Weapon3BUTTON);
+    public static string Weapon4BUTTON = nameof(Weapon4BUTTON);
+    public static string Weapon5BUTTON = nameof(Weapon5BUTTON);
+    public static string Weapon6BUTTON = nameof(Weapon6BUTTON);
+    public static string MineBUTTON = nameof(MineBUTTON);
+    public static string GrenadeBUTTON = nameof(GrenadeBUTTON);
+    public static string SelectCharacterBUTTON = nameof(SelectCharacterBUTTON);
+    public static string SelectCraftBUTTON = nameof(SelectCraftBUTTON);
+    public static string SelectShopBUTTON = nameof(SelectShopBUTTON);
+    public static string SettingsBUTTON = nameof(SettingsBUTTON);
 
     public static class CraftSystem
     {
-        public static string Craft = nameof(Craft);
-        public static string RotateObject = nameof(RotateObject);
+        public static string CraftBUTTON = nameof(CraftBUTTON);
+        public static string RotateObjectBUTTON = nameof(RotateObjectBUTTON);
 
         public static class Categoty
         {
-            public static string BackToCategory = nameof(BackToCategory);
+            public static string BackToCategoryBUTTON = nameof(BackToCategoryBUTTON);
 
-            public static string Blcoks = nameof(CraftCategory.Blocks);
-            public static string Decore = nameof(CraftCategory.Decore);
-            public static string Bird = nameof(CraftCategory.Bird);
-            public static string House = nameof(CraftCategory.House);
-            public static string Other = nameof(CraftCategory.Other);
+            public static string BlcoksBUTTON = nameof(BlcoksBUTTON);
+            public static string DecoreBUTTON = nameof(DecoreBUTTON);
+            public static string BirdBUTTON = nameof(BirdBUTTON);
+            public static string HouseBUTTON = nameof(HouseBUTTON);
+            public static string OtherBUTTON = nameof(OtherBUTTON);
         }
     }
 }

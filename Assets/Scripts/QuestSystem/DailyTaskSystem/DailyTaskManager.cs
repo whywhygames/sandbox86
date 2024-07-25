@@ -170,17 +170,15 @@ public class DailyTaskManager : MonoBehaviour
     {
         if (File.Exists(Application.persistentDataPath + "/MySaveData.dat"))
         {
-            Debug.Log(0);
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/MySaveData.dat", FileMode.Open);
-            Debug.Log(1);
+
             if (file.Length == 0)
             {
-                Debug.Log(2);
                 Init();
                 return;
             }
-            Debug.Log(3);
+
             SaveData data = (SaveData)bf.Deserialize(file);
             file.Close();
 

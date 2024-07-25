@@ -8,7 +8,7 @@ public class CraftButton : MonoBehaviour
 
     private void Update()
     {
-        if (TCKInput.GetAction($"Craft{_craftType}", EActionEvent.Down))
+        if (TCKInput.GetAction($"Craft{_craftType}BUTTON", EActionEvent.Down))
         {
             _buildingGrid.StartPlacingBuilding(_craftType);
         }

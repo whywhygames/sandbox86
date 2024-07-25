@@ -55,10 +55,10 @@ public class CharacterSelector : MonoBehaviour
 
     private void Update()
     {
-        if (TCKInput.GetButtonDown(InputParametrs.SelectCharacter))
+      /*  if (TCKInput.GetButtonDown(InputParametrs.SelectCharacterBUTTON))
         {
             Open();
-        }
+        }*/
     }
 
     public void OnClickHandler(CharacterType characterType)

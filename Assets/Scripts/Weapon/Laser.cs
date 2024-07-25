@@ -35,7 +35,7 @@ public class Laser : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
-            if (TCKInput.GetButton(InputParametrs.Fire) && _gun.IsAllowed && _gunForBullet.LoadedBullets > 0)
+            if (TCKInput.GetButton(InputParametrs.FireBUTTON) && _gun.IsAllowed && _gunForBullet.LoadedBullets > 0)
             {
                 if (_audioSource.isPlaying == false)
                 {
@@ -63,7 +63,7 @@ public class Laser : MonoBehaviour
                     _lineRenderer.SetPosition(1, _aim.forward * 1000000);
                 }
             }
-            else if (TCKInput.GetButtonUp(InputParametrs.Fire) || _gun.IsAllowed == false || _gunForBullet.LoadedBullets <= 0)
+            else if (TCKInput.GetButtonUp(InputParametrs.FireBUTTON) || _gun.IsAllowed == false || _gunForBullet.LoadedBullets <= 0)
             {
                 // _laser.SetActive(false);
                 _newLaser.SetActive(false);

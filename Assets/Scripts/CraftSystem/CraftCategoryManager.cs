@@ -12,7 +12,7 @@ public class CraftCategoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (TCKInput.GetAction(InputParametrs.CraftSystem.Categoty.BackToCategory, EActionEvent.Down))
+        if (TCKInput.GetAction(InputParametrs.CraftSystem.Categoty.BackToCategoryBUTTON, EActionEvent.Down))
         {
             Setup();
         }

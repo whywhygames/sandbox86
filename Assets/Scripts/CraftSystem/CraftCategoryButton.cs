@@ -8,7 +8,7 @@ public class CraftCategoryButton : MonoBehaviour
 
     private void Update()
     {
-        if (TCKInput.GetAction(_craftCategory.ToString(), EActionEvent.Down))
+        if (TCKInput.GetAction(_craftCategory.ToString() + "BUTTON", EActionEvent.Down))
         {
             _buildingGrid.SetPanel(_craftCategory);
         }

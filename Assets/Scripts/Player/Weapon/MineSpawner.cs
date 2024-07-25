@@ -31,7 +31,7 @@ public class MineSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (TCKInput.GetButtonDown(InputParametrs.Mine))
+        if (TCKInput.GetButtonDown(InputParametrs.MineBUTTON))
         {
             if (MineCount > 0)
             {
