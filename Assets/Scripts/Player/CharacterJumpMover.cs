@@ -21,6 +21,8 @@ public class CharacterJumpMover : MonoBehaviour
     {
         IsJump = !Physics.CheckSphere(_legs.position, _radius / 10, _groundMask);
 
+        Debug.Log(!Physics.CheckSphere(_legs.position, _radius / 10, _groundMask));
+
         if (IsJump == false)
         {
             move = Vector2.zero;

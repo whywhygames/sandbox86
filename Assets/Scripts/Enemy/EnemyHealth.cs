@@ -48,7 +48,6 @@ public class EnemyHealth : MonoBehaviour
     {
         if (IsDied)
             return;
-        Debug.Log(damage);
 
         _currentHealth -= damage;
         _enemyMovement.AttackedTriggerActivate();

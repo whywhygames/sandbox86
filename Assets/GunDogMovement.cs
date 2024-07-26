@@ -194,7 +194,7 @@ public class GunDogMovement : MonoBehaviour
                 if (_elepsedWaitTime >= _waitTime)
                 {
                     _isActionComplited = true;
-                    _animator.SetInteger("ActionType_int", Random.Range(1, 5));
+                    _animator.SetInteger("ActionType_int", Random.Range(1, 4));
                     _elepsedWaitTime = 0;
                 }
             }

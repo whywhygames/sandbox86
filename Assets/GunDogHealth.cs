@@ -35,6 +35,9 @@ public class GunDogHealth : MonoBehaviour
 
     public void OnHit(Hit hit)
     {
+        if (hit.Attacker.TryGetComponent(out GunDogHealth health))
+            return;
+
         if (_enemyMovement.IsFreez)
             TakeDamage(hit.Damage * 2.5f, hit.Type);
         else

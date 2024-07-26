@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
         CurrentHealth -= damage;
         ChangeHealth?.Invoke(CurrentHealth);
 
-        if (CurrentHealth < MaxHealth / 2)
+        if (CurrentHealth <= MaxHealth / 2)
         {
             HalfHealth?.Invoke();
         }

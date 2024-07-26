@@ -277,7 +277,8 @@ namespace CoverShooter
 
         protected virtual void Apply(GameObject target, Vector3 position, Vector3 normal, float fraction)
         {
-            var damage = CenterDamage * fraction;
+            //var damage = CenterDamage * fraction;
+            var damage = CenterDamage;
 
             if (damage > float.Epsilon)
             {

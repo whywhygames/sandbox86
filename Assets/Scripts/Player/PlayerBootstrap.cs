@@ -1,3 +1,4 @@
+using CoverShooter;
 using System.Collections;
 using System.Collections.Generic;
 using ThirdPersonCamera;
@@ -12,6 +13,8 @@ public class PlayerBootstrap : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
     [SerializeField] private Material _material;
     [SerializeField] private Animator _animator;
+    [SerializeField] private CharacterMotor _characterMotor;
+    [SerializeField] private Melee _fist;
 
     [field: SerializeField] public CharacterType Type = CharacterType.Assasin;
 
@@ -39,7 +42,9 @@ public class PlayerBootstrap : MonoBehaviour
 
         _skinnedMeshRenderer.sharedMesh = _currentCharacter.Mesh;
         _material.mainTexture = _currentCharacter.Texture;
-       // _animator.runtimeAnimatorController = _currentCharacter.Animator;
+        _characterMotor.JumpSettings.Strength = _currentCharacter.JumpSpeed;
+        _fist.Damage = _currentCharacter.FistPower;
+        // _animator.runtimeAnimatorController = _currentCharacter.Animator;
         Type = characterType;
     }
 
