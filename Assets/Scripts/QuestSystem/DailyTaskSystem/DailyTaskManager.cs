@@ -54,12 +54,10 @@ public class DailyTaskManager : MonoBehaviour
          if (DateTime.Today > lastClaimTime)
          {
              NewDay();
-             Debug.Log(1234);
          }
          else
          {
             LoadGame();
-            Debug.Log(00000);
          }
      }
 

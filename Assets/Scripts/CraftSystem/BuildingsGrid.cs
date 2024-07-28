@@ -12,6 +12,7 @@ public class BuildingsGrid : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _maxDistance;
     [SerializeField] private Transform _container;
+    [SerializeField] private AudioSource _audioSource;
 
     public Vector2Int GridSize = new Vector2Int(10000, 10000);
     private Vector3 _targetRotation;
@@ -120,6 +121,8 @@ public class BuildingsGrid : MonoBehaviour
     private void PlaceFlyingBuilding(int placeX, int placeY, Vector3 newPosition)
     {
         Instantiate(_flyingBuilding.Prefab, newPosition, _flyingBuilding.transform.rotation);
+        _audioSource.pitch = Random.Range(0.8f, 1.2f);
+        _audioSource.PlayOneShot(_flyingBuilding.SpawnClip);
         Craft?.Invoke(_flyingBuilding);
     }
 

@@ -14,7 +14,7 @@ public class EnemyMovement : MonoBehaviour
     
     private NavMeshPath _navMeshPath;
 
-    [Header("Patrul")]
+    [Header("Follow")]
     [SerializeField] private float _followDistance;
     [SerializeField] private float _followSpeed;
     
@@ -112,6 +112,7 @@ public class EnemyMovement : MonoBehaviour
         _animator.SetBool("Walk", true);
         _isAttacked = false;
         IsFreez = false;
+        transform.position = GetRandomPointForSpawn();
         GetRandomPoint();
     }
 
@@ -133,10 +134,10 @@ public class EnemyMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, _target.transform.position) < _attackDistance)
         {
             _elapsedTime += Time.deltaTime;
+            transform.LookAt(_target.transform.position);
 
             if (_elapsedTime >= _delay)
             {
-                transform.LookAt(_target.transform.position);
                 _animator.SetTrigger("Attack");
                 _isFollow = false;
                 _agent.isStopped = true;
@@ -216,12 +217,6 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector3 GetRandomPoint()
     {
-        /*  Vector3 randomPointInCircle = Random.insideUnitSphere * _patrulField.Radius;
-          _randomPoint = randomPointInCircle + _patrulField.transform.position;
-          _randomPoint.y = 0;
-
-          return _randomPoint;*/
-
         bool getCorrectPoint = false;
 
         while (getCorrectPoint == false)
@@ -237,6 +232,15 @@ public class EnemyMovement : MonoBehaviour
                 getCorrectPoint = true;
         }
 
+        return _randomPoint;
+    }
+
+    public Vector3 GetRandomPointForSpawn()
+    {
+        NavMeshHit navMeshHit;
+        NavMesh.SamplePosition(Random.insideUnitSphere * _patrulField.Radius + _patrulField.transform.position, out navMeshHit, _patrulField.Radius, NavMesh.AllAreas);
+
+        _randomPoint = navMeshHit.position;
         return _randomPoint;
     }
 

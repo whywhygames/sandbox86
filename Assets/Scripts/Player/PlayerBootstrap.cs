@@ -15,6 +15,8 @@ public class PlayerBootstrap : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private CharacterMotor _characterMotor;
     [SerializeField] private Melee _fist;
+    [SerializeField] private Gun _gunSniper;
+    [SerializeField] private Gun _gunRevolver;
 
     [field: SerializeField] public CharacterType Type = CharacterType.Assasin;
 
@@ -44,7 +46,11 @@ public class PlayerBootstrap : MonoBehaviour
         _material.mainTexture = _currentCharacter.Texture;
         _characterMotor.JumpSettings.Strength = _currentCharacter.JumpSpeed;
         _fist.Damage = _currentCharacter.FistPower;
-        // _animator.runtimeAnimatorController = _currentCharacter.Animator;
+        _gunSniper.Recoil.BaseBloom = _currentCharacter.BaseBloom;
+        _gunSniper.Recoil.MaxBloom = _currentCharacter.MaxBloom;
+        _gunRevolver.Recoil.BaseBloom = _currentCharacter.BaseBloom;
+        _gunRevolver.Recoil.MaxBloom = _currentCharacter.MaxBloom;
+        _animator.runtimeAnimatorController = _currentCharacter.Animator;
         Type = characterType;
     }
 

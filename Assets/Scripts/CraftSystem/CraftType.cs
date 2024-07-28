@@ -1,26 +1,39 @@
 ﻿public enum CraftType
 {
-    Cliff,
-    Dirt,
-    FullGrass,
-    Grass,
-    Sand,
-    Cock,
-    Flamingo,
-    Peacock,
-    Swallow,
-    Swan, 
-    BigDoor,
-    Door,
-    Floor,
-    Stairs,
-    Wall,
-    Palm,
-    Bed,
-    Chair, 
-    Table,
-    Column,
-    Teleport,
-    RedBarrel,
-    Firework
+    //BLOCKS
+    Cliff, //+
+    Dirt,//+
+    FullGrass,//+
+    Grass,//+
+    Sand,//+
+    //BIRD
+    Cock,//+
+    Flamingo,//+
+    Peacock,//+
+    Swallow,//+
+    Swan, //+
+    //HOUSE
+    Carpet,//+
+    Table,//+
+    Chair,//+
+    Jug,//+
+    GreenBox,//+
+    //CONSTRUCTIONS
+    Floor,//+
+    SteelFence,//+
+    WoodenFence,//+
+    HighWall,//+
+    LowWall,//+
+    //STREET
+    Canopy,
+    WoodenBox,
+    BoxBrick,
+    Barrel,
+    RedWhiteWall,
+    //NATURE
+    Pallet,
+    Tree, 
+    Flower,
+    Firework,
+    Barrier
 }

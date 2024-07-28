@@ -4,6 +4,7 @@ public class Building : MonoBehaviour
 {
     [field: SerializeField] public CraftType Type { get; private set; }
     [field: SerializeField] public Transform Prefab { get; private set; }
+    [field: SerializeField] public AudioClip SpawnClip { get; private set; }
 
     public Renderer MainRenderer;
     public Vector2Int Size = Vector2Int.one;
@@ -27,7 +28,6 @@ public class Building : MonoBehaviour
         if (hits.Length > 0 || _isAvailabilityForLenght == false)
         {
             MainRenderer.material = _imposibleMaterial;
-
             CanPut = false;
         }
         else
@@ -45,7 +45,7 @@ public class Building : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        for (int x = 0; x < Size.x; x++)
+       /* for (int x = 0; x < Size.x; x++)
         {
             for (int y = 0; y < Size.y; y++)
             {
@@ -54,7 +54,7 @@ public class Building : MonoBehaviour
 
                 Gizmos.DrawCube(transform.position + new Vector3(x, 0, y), new Vector3(1, .1f, 1));
             }
-        }
+        }*/ 
 
         Gizmos.color = new Color(0, 0, 1, 0.5f);
         Gizmos.DrawCube(_cubePoint.position, _cubeScale * 2);

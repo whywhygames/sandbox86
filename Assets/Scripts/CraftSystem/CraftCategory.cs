@@ -1,8 +1,8 @@
 ﻿public enum CraftCategory
 {
     Blocks,
-    Decore,
-    Bird,
     House,
-    Other
+    Construction,
+    Street,
+    Nature
 }

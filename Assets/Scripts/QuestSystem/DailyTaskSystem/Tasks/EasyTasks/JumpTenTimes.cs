@@ -1,4 +1,5 @@
 using CoverShooter;
+using UnityEngine;
 
 public class JumpTenTimes : DailyTask
 {
@@ -8,6 +9,7 @@ public class JumpTenTimes : DailyTask
     {
         _playerInput = FindObjectOfType<CharacterMotor>();
         _playerInput.Jump += OnJumped;
+        Debug.Log(999);
     }
 
     private void OnDisable()
@@ -20,6 +22,7 @@ public class JumpTenTimes : DailyTask
         if (IsCompleted)
             return;
 
+        Debug.Log(1245);
         AddCounter(1);
 
         if (CurrentCount == TargerCount)

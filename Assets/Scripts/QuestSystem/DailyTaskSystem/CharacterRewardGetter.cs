@@ -1,5 +1,6 @@
 using CoverShooter;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,8 +15,15 @@ public class CharacterRewardGetter : MonoBehaviour
 
     public void TakeReward(TaskReward reward)
     {
-        
         GiveReward(reward);
+    }
+
+    public void TakeReward(List<TaskReward> rewards)
+    {
+        foreach (TaskReward reward in rewards)
+        {
+            GiveReward(reward);
+        }
     }
 
     private void GiveReward(TaskReward reward)

@@ -20,7 +20,6 @@ public abstract class DailyTask : MonoBehaviour
     public event UnityAction<float, float> ChangedCounter;
     public event UnityAction<int> ChangingCounter;
 
-
     public void Initialize(CharacterRewardGetter rewardGetter)
     {
         _rewardGetter = rewardGetter;
