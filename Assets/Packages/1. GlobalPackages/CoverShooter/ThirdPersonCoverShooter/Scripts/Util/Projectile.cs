@@ -7,6 +7,7 @@ namespace CoverShooter
     /// </summary>
     public class Projectile : MonoBehaviour
     {
+        [SerializeField] private bool _isDestroyed = true;
         /// <summary>
         /// Speed of the projectile in meters per second.
         /// </summary>
@@ -44,7 +45,8 @@ namespace CoverShooter
                     Target.SendMessage("OnHit", Hit);
                 }
 
-                GameObject.Destroy(gameObject);
+                if (_isDestroyed)
+                    GameObject.Destroy(gameObject);
             }
         }
     }

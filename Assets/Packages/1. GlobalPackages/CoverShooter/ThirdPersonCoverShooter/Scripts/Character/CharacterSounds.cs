@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace CoverShooter
 {
@@ -9,17 +10,21 @@ namespace CoverShooter
     [RequireComponent(typeof(CharacterMotor))]
     public class CharacterSounds : MonoBehaviour, ICharacterPhysicsListener, ICharacterHealthListener
     {
+        [SerializeField] private PlayerBootstrap _character;
+        [SerializeField] private AudioSource _audioSource;
         /// <summary>
         /// Possible sounds to play on each footstep.
         /// </summary>
         [Tooltip("Possible sounds to play on each footstep.")]
-        public AudioClip[] Footstep;
+        public AudioClip[] FootstepAssasin;
+        public AudioClip[] FootstepTechnician;
+        public AudioClip[] FootstepCowboy;
 
         /// <summary>
         /// Possible sounds to play when the character dies.
         /// </summary>
         [Tooltip("Possible sounds to play when the character dies.")]
-        public AudioClip[] Death;
+        [HideInInspector] public AudioClip[] Death;
 
         /// <summary>
         /// Possible sounds to play at the beginning of a jump.
@@ -31,37 +36,37 @@ namespace CoverShooter
         /// Possible sounds to play when the character lands.
         /// </summary>
         [Tooltip("Possible sounds to play when the character lands.")]
-        public AudioClip[] Land;
+        [HideInInspector] public AudioClip[] Land;
 
         /// <summary>
         /// Possible sounds to play when the character blocks a melee attack.
         /// </summary>
         [Tooltip("Possible sounds to play when the character blocks a melee attack.")]
-        public AudioClip[] Block;
+        [HideInInspector] public AudioClip[] Block;
 
         /// <summary>
         /// Possible sounds to play when the character is hurt.
         /// </summary>
         [Tooltip("Possible sounds to play when the character is hurt.")]
-        public AudioClip[] Hurt;
+        [HideInInspector] public AudioClip[] Hurt;
 
         /// <summary>
         /// Possible sounds to play when the character is hit.
         /// </summary>
         [Tooltip("Possible sounds to play when the character is hit.")]
-        public AudioClip[] Hit;
+        [HideInInspector] public AudioClip[] Hit;
 
         /// <summary>
         /// Possible sounds to play when the character is dealt a lot of damage by a hit.
         /// </summary>
         [Tooltip("Possible sounds to play when the character is dealt a lot of damage by a hit.")]
-        public AudioClip[] BigHit;
+        [HideInInspector] public AudioClip[] BigHit;
 
         /// <summary>
         /// Damage that has to be dealt to play big hit sound.
         /// </summary>
         [Tooltip("Damage that has to be dealt to play big hit sound.")]
-        public float BigDamageThreshold = 50;
+        [HideInInspector] public float BigDamageThreshold = 50;
 
         private CharacterMotor _motor;
         private float _hurtSoundTimer;
@@ -93,7 +98,20 @@ namespace CoverShooter
         public void OnFootstep(Vector3 position)
         {
             if (_motor.IsAlive)
-                playSound(Footstep, position);
+                switch (_character.Type)
+                {
+                    case CharacterType.Assasin:
+                        playSound(FootstepAssasin, position);
+                        break;
+
+                    case CharacterType.Technician:
+                        playSound(FootstepTechnician, position);
+                        break;
+
+                    case CharacterType.Cowboy:
+                        playSound(FootstepCowboy, position);
+                        break;
+                }
         }
 
         public void OnDead()
@@ -138,7 +156,7 @@ namespace CoverShooter
             var clip = clips[UnityEngine.Random.Range(0, clips.Length)];
 
             if (delay < float.Epsilon)
-                AudioSource.PlayClipAtPoint(clip, position);
+                _audioSource.PlayOneShot(clip);
             else
                 StartCoroutine(delayedClip(clip, position, delay));
         }
@@ -146,7 +164,7 @@ namespace CoverShooter
         private IEnumerator delayedClip(AudioClip clip, Vector3 position, float delay)
         {
             yield return new WaitForSeconds(delay);
-            AudioSource.PlayClipAtPoint(clip, position);
+            _audioSource.PlayOneShot(clip);
         }
     }
 }

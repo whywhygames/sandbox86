@@ -49,7 +49,6 @@ public class Laser : MonoBehaviour
 
                 if (Physics.Raycast(_origin.position, _aim.forward * 10, out hit))
                 {
-                    Debug.Log(1111);
                     if (hit.collider)
                     {
                         _lineRenderer.SetPosition(0, _origin.position);
@@ -58,7 +57,6 @@ public class Laser : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(2222222);
                     _lineRenderer.SetPosition(0, _origin.position);
                     _lineRenderer.SetPosition(1, _aim.forward * 1000000);
                 }

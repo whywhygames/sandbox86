@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private Transform _startPoint;
+    [SerializeField] private FightField _fightField;
     [field: SerializeField] public int MaxHealth { get; private set; }
     public int CurrentHealth { get; private set; }
 
@@ -24,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
         if (CurrentHealth <= MaxHealth / 2)
         {
             HalfHealth?.Invoke();
+            _fightField.gameObject.SetActive(true);
         }
 
         if (CurrentHealth <= 0)

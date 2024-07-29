@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace CoverShooter
@@ -20,6 +20,8 @@ namespace CoverShooter
     {
         #region Properties
         public WeaponShootType shootType;
+        public bool NeedCharacter = true;
+        public GameObject Attacker;
         /// <summary>
         /// Point of creation for bullets in world space.
         /// </summary>
@@ -516,23 +518,39 @@ namespace CoverShooter
             {
                 var isAllowedAndFiring = _isFiringOnNextUpdate && _isAllowed;
 
-                if (Character != null)
+                if (NeedCharacter)
                 {
-                    if (isAllowedAndFiring)
-                        Character.InputBloom();
+                    if (Character != null)
+                    {
+                        if (isAllowedAndFiring)
+                            Character.InputBloom();
 
+                        if (isAllowedAndFiring && !_wasAllowedAndFiring)
+                        {
+                            Character.NotifyStartGunFire();
+                            if (FireStarted != null) FireStarted.Invoke();
+                        }
+
+                        if (!isAllowedAndFiring && _wasAllowedAndFiring)
+                        {
+                            Character.NotifyStopGunFire();
+                            if (FireStopped != null) FireStopped.Invoke();
+                        }
+                    }
+                }
+                else
+                {
                     if (isAllowedAndFiring && !_wasAllowedAndFiring)
                     {
-                        Character.NotifyStartGunFire();
                         if (FireStarted != null) FireStarted.Invoke();
                     }
 
                     if (!isAllowedAndFiring && _wasAllowedAndFiring)
                     {
-                        Character.NotifyStopGunFire();
                         if (FireStopped != null) FireStopped.Invoke();
                     }
                 }
+
 
                 _wasAllowedAndFiring = isAllowedAndFiring;
             }
@@ -1035,7 +1053,11 @@ namespace CoverShooter
                         break;
                 }
 
-                var hitStruct = new Hit(hit.point, -direction, damage, Character.gameObject, hit.collider == null ? null : hit.collider.gameObject, type, DamageResponseWaitTime);
+                Hit hitStruct;
+                if (NeedCharacter)
+                    hitStruct = new Hit(hit.point, -direction, damage, Character.gameObject, hit.collider == null ? null : hit.collider.gameObject, type, DamageResponseWaitTime);
+                else
+                    hitStruct = new Hit(hit.point, -direction, damage, Attacker, hit.collider == null ? null : hit.collider.gameObject, type, DamageResponseWaitTime);
 
                 if (Bullet != null)
                 {
@@ -1082,6 +1104,7 @@ namespace CoverShooter
             }
         }
 
-        #endregion
+    #endregion
+        
     }
 }

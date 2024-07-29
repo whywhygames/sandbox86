@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,12 +20,29 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
+
+    public void Setup()
+    {
+        foreach (EnemyHealth enemy in _allEnemies)
+        {
+            enemy.Respawn();
+            enemy.EnemyMovement.Respawn();
+        }
+    }
 }
 
 [Serializable]
 public class EnemyField
 {
-    [SerializeField] private Transform _point;
+    [SerializeField] private PatrulField _point;
 
     public List<EnemyHealth> Enemies = new List<EnemyHealth>();
+
+    public void Setup()
+    {
+        foreach (EnemyHealth enemy in Enemies)
+        {
+
+        }
+    }
 }

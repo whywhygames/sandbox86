@@ -5329,12 +5329,14 @@ namespace CoverShooter
             else
                 rightFootDirection = _previousRightFootDirection;
 
-            _feetLevel = 0.14f * transform.lossyScale.y;
+            _feetLevel = 0.54f * transform.lossyScale.y;
 
             float threshold = 0.05f * transform.lossyScale.y;
 
             if (leftHeight > _feetLevel + threshold && !_hasRaisedLeftFoot)
+            {
                 _hasRaisedLeftFoot = true;
+            }
             else if (leftHeight < _feetLevel && _hasRaisedLeftFoot)
             {
                 _hasRaisedLeftFoot = false;
@@ -5779,8 +5781,9 @@ namespace CoverShooter
 
                 if (!_cover.In && !_isClimbing && !_isJumping && _nextJumpTimer < float.Epsilon && _wantsToJump)
                 {
-                    _isIntendingToJump = true;
                     Jump?.Invoke();
+                    _isIntendingToJump = true;
+                    Debug.Log(123);
                 }
             }
             else if (_body.velocity.y < -5)
