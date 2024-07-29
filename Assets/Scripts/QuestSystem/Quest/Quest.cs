@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public abstract class Quest : MonoBehaviour
+public class Quest : MonoBehaviour
 {
     [field: SerializeField] public string Description { get; set; }
     [field: SerializeField] public float TargerCount { get; set; }
 
+    [SerializeField] private Quest TargerQuest;
     [SerializeField] private List<TaskReward> _rewards = new List<TaskReward>();
     [SerializeField] private LayerMask _characterMask;
     [SerializeField] private Button _startButton;
@@ -53,10 +54,17 @@ public abstract class Quest : MonoBehaviour
     }
 
     public event UnityAction<float, float> ChangedCounter;
+    public event UnityAction Stopped;
 
     private void OnEnable()
     {
         _startButton.onClick.AddListener(StartQuest);
+    }
+
+    private void Start()
+    {
+        if (TargerQuest != null)
+            TargerQuest.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -92,6 +100,14 @@ public abstract class Quest : MonoBehaviour
         _rewardGetter = rewardGetter;
     }
 
+    public virtual void Setup()
+    {
+        _questPointer.SetActive(true);
+        IsStarted = false;
+        Stopped?.Invoke();
+        CurrentCount = 0;
+    }
+
     protected virtual void StartQuest()
     {
         _started?.Invoke(this);
@@ -102,14 +118,17 @@ public abstract class Quest : MonoBehaviour
         ChangedCounter?.Invoke(TargerCount, CurrentCount);
     }
 
-    protected void GiveReward()
+    public void GiveReward()
     {
         IsCompleted = true;
         _rewardGetter.TakeReward(_rewards);
         _complited?.Invoke();
+
+        if (TargerQuest != null)
+            TargerQuest.gameObject.SetActive(true);
     }
 
-    protected void AddCounter(float value)
+    public void AddCounter(float value)
     {
         CurrentCount += value;
         ChangedCounter?.Invoke(TargerCount, CurrentCount);

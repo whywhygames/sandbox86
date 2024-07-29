@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TouchControlsKit;
 using UnityEngine;
 
@@ -34,14 +32,18 @@ public class CharacterJumpMover : MonoBehaviour
         {
             move = TCKInput.GetAxis(InputParametrs.Joystick);
 
-            if (_previousAxis.magnitude > 0.3)
+            // Debug.Log(_previousAxis.magnitude);
+
+            float speed = _speed;
+
+            if (_previousAxis.magnitude < 0.3)
             {
-                move /= 10;
+                speed /= 2;
             }
 
             if (move.magnitude > 0.3)
             {
-                _rigidbody.velocity = new Vector3(transform.forward.x * Mathf.Abs(move.normalized.magnitude) * _speed, _rigidbody.velocity.y, transform.forward.z * Mathf.Abs(move.normalized.magnitude) * _speed);
+                _rigidbody.velocity = new Vector3(transform.forward.x * Mathf.Abs(move.normalized.magnitude) * speed, _rigidbody.velocity.y, transform.forward.z * Mathf.Abs(move.normalized.magnitude) * speed);
             }
              // var vfer = new Vector3(transform.forward.x * _speed, 0, transform.forward.z * _speed);
             // transform.Translate(vfer);

@@ -5783,7 +5783,6 @@ namespace CoverShooter
                 {
                     Jump?.Invoke();
                     _isIntendingToJump = true;
-                    Debug.Log(123);
                 }
             }
             else if (_body.velocity.y < -5)

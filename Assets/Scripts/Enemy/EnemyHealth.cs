@@ -67,7 +67,8 @@ public class EnemyHealth : MonoBehaviour
             IsDied = true;
             _collider.enabled = false;
             Died?.Invoke(hitType, _enemyType);
-            _animator.SetBool("IsStop", false);
+            // _animator.SetBool("IsStop", false);
+            _animator.speed = 1;
             _animator.SetTrigger("Death");
             Daying?.Invoke(this);
 
