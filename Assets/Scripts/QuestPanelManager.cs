@@ -24,6 +24,11 @@ public class QuestPanelManager : MonoBehaviour
         _targetQuest.ChangedCounter += ChangedCounter;
     }
 
+    public void Setup()
+    {
+        StartCoroutine(Close(_progressPanel));
+    }
+
     private void OnDisable()
     {
         _targetQuest.Completed -= Complited;

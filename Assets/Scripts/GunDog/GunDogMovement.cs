@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class GunDogMovement : MonoBehaviour
 {
     [field: SerializeField] public bool IsAvailable {  get; private set; }
+    [SerializeField] private bool _isLock;
 
     [Header("Components")]
     [SerializeField] private NavMeshAgent _agent;
@@ -30,12 +31,13 @@ public class GunDogMovement : MonoBehaviour
     private float _elepsedWaitTime;
 
     [Header("Attack")]
-    [SerializeField] private Transform _target;
     [SerializeField] private bool _isAttacked;
     [SerializeField] private DogWeapon _weapon;
     [SerializeField] private float _attackDistance;
     [SerializeField] private float _radius;
     [SerializeField] private LayerMask _layerMask;
+    
+    private Transform _target;
 
     [Header("Follow")]
     [SerializeField] private float _followSpeed;
@@ -84,8 +86,13 @@ public class GunDogMovement : MonoBehaviour
             _agent.isStopped = true;
             return;
         }
+
         if (IsFreez)
-        { 
+            return;
+
+        if (_isLock)
+        {
+            _animator.SetInteger("ActionType_int", 2);
             return;
         }
 
@@ -272,34 +279,53 @@ public class GunDogMovement : MonoBehaviour
         IsAvailable = true;
     }
 
-    public void Respawn()
+    public void Unlcoked()
     {
-        if (IsAvailable == false)
-            return;
+        _isLock = false;
+        Setup();
+    }
 
+    public void Setup()
+    {
         _health.Respwan();
-        transform.position = GetRandomPointInSpawn();
         _isWait = Random.Range(0, 2) == 0 ? true : false;
 
         _waitTime = Random.Range(_waitTimeMin, _waitTimeMax);
         _readyToPatrulTime = _waitTime + Random.Range(_waitTimeMin, _waitTimeMax);
         _animator.SetFloat("Movement_f", 0);
         _isAttacked = false;
-        IsFreez = false;
+        _isFollow = false;
+
+        if (IsFreez == true)
+        {
+            OnDefreez();
+        }
+
         GetRandomPoint(_patrulField.transform.position, _patrulField.Radius);
+    }
+
+    public void Respawn()
+    {
+        if (IsAvailable == false || _isLock == true)
+            return;
+
+        transform.position = GetRandomPointInSpawn();
+        Setup();
     }
 
     private void OnDefreez()
     {
         IsFreez = false;
         _agent.isStopped = false;
+        _animator.speed = 1;
     }
 
     private void OnFreez()
     {
         IsFreez = true;
         _agent.isStopped = true;
-        _animator.SetFloat("Movement_f", 0);
+        _weapon.Close();
+        _animator.speed = 0;
         Freezed?.Invoke();
         _health.Freez();
     }
