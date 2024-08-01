@@ -57,6 +57,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _freezController.Freezing += OnFreez;
         _freezController.Defreezing += OnDefreez;
+        _navMeshPath = new NavMeshPath();
     }
 
     private void OnDisable()
@@ -67,7 +68,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        _navMeshPath = new NavMeshPath();
+        
         Respawn();
     }
 
@@ -103,7 +104,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void Respawn()
+    public void Setup()
     {
         _isWait = Random.Range(0, 2) == 0 ? true : false;
 
@@ -112,8 +113,13 @@ public class EnemyMovement : MonoBehaviour
         _animator.SetBool("Walk", true);
         _isAttacked = false;
         IsFreez = false;
-        transform.position = GetRandomPointForSpawn();
         GetRandomPoint();
+    }
+
+    public void Respawn()
+    {
+        Setup();
+        transform.position = GetRandomPointForSpawn();
     }
 
     public void AttackedTriggerActivate()
@@ -248,15 +254,17 @@ public class EnemyMovement : MonoBehaviour
     {
         IsFreez = true;
         _agent.isStopped = true;
-        _animator.SetBool("IsStop", true);
+     //   _animator.SetBool("IsStop", true);
         Freezed?.Invoke();
         _health.Freez();
+        _animator.speed = 0;
     }
 
     private void OnDefreez()
     {
         IsFreez = false;
         _agent.isStopped = false;
-        _animator.SetBool("IsStop", false);
+        //_animator.SetBool("IsStop", false);
+        _animator.speed = 1;
     }
 }

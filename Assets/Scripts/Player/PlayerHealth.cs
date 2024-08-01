@@ -42,11 +42,6 @@ public class PlayerHealth : MonoBehaviour
         ChangeHealth?.Invoke(CurrentHealth);
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        //if () //Проверка касания с аптечкой
-    }
-
     public void UpgradeMaxHp(int upgradeCount)
     {
         MaxHealth += upgradeCount;
@@ -57,6 +52,7 @@ public class PlayerHealth : MonoBehaviour
     public void AddHealth(int count)
     {
         CurrentHealth += count;
+        CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
         ChangeHealth?.Invoke(CurrentHealth);
     }
 }

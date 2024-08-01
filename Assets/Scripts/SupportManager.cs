@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SupportManager : MonoBehaviour
+public class SupportManager : MonoBehaviour 
 {
     [SerializeField] private List<GunDogMovement> _allSupports = new List<GunDogMovement>();
 

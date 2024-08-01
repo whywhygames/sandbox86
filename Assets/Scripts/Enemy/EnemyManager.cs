@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour 
 {
     [SerializeField] private List<EnemyField> _enemyFields = new List<EnemyField>();
     

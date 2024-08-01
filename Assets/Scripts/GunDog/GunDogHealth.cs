@@ -42,6 +42,7 @@ public class GunDogHealth : MonoBehaviour
             }
 
             IsDied = true;
+            _animator.speed = 1;
             _animator.SetInteger("ActionType_int", 0); 
             _animator.SetFloat("Movement_f", 0); 
             _animator.SetBool("AttackReady_b", false);

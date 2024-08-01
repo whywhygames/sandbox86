@@ -1,9 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillBugsQuest : Quest
+public class KillBugsQuest : MonoBehaviour
 {
-    [SerializeField] private List<EnemyHealth> _targetEnemyes;
+    [SerializeField] private List<EnemyHealth> _targetEnemyes = new List<EnemyHealth>();
+    [SerializeField] private FreeMedecine _freeMedecineReward;
+    [SerializeField] private Quest _questObject;
+
+    private void OnEnable()
+    {
+        _questObject.Started += StartQuest;
+        _questObject.Stopped += Setup;
+    }
 
     private void Start()
     {
@@ -12,25 +20,37 @@ public class KillBugsQuest : Quest
             enemy.Daying += OnDied;
             enemy.gameObject.SetActive(false);
         }
+
+        _freeMedecineReward.gameObject.SetActive(false);
     }
 
-    protected override void StartQuest()
+    private void StartQuest(Quest arg0)
     {
-        base.StartQuest();
-
         foreach (EnemyHealth enemy in _targetEnemyes)
         {
             enemy.gameObject.SetActive(true);
+            enemy.GetComponent<EnemyMovement>().Setup();
+        }
+    }
+
+    private void Setup()
+    {
+        foreach (EnemyHealth enemy in _targetEnemyes)
+        {
+            enemy.Respawn();
+            enemy.gameObject.SetActive(false);
         }
     }
 
     private void OnDied(EnemyHealth enemy)
     {
-        AddCounter(1);
+        _questObject.AddCounter(1);
 
-        if (CurrentCount == TargerCount)
+        if (_questObject.CurrentCount == _questObject.TargerCount)
         {
-            GiveReward();
+            _questObject.GiveReward();
+            _freeMedecineReward.transform.position = new Vector3(enemy.transform.position.x, _freeMedecineReward.transform.position.y, enemy.transform.position.z);
+            _freeMedecineReward.gameObject.SetActive(true);
         }
     }
 }

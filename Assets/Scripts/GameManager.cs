@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         _enemyManager.Setup();
         _supportManager.Setup();
-
+        _questManager.Setup();
     }
 
     private void OnHalfHealthForPlayer()
