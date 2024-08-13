@@ -7,6 +7,10 @@ public class TESTAnimatorControllerForZeleni : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _animatorPanel;
 
+    private void Start()
+    {
+        _animator.gameObject.SetActive(false);
+    }
     public void Activate()
     {
         _animatorPanel.SetActive(true);
