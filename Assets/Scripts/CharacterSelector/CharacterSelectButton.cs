@@ -6,9 +6,12 @@ public class CharacterSelectButton : MonoBehaviour
 {
     [SerializeField] private CharacterSelector _characterSelector;
     [SerializeField] private Image _iconImage;
+    [SerializeField] private GameObject _outline;
 
     private CharacterViewConfigure _configure;
     private Button _button;
+
+    public CharacterViewConfigure Configure { get => _configure; private set => _configure = value; }
 
     private void OnEnable()
     {
@@ -25,11 +28,16 @@ public class CharacterSelectButton : MonoBehaviour
     {
         _characterSelector = selector;
         _configure = configure;
-        _iconImage.sprite = _configure.IconButton;
+        _iconImage.sprite = _configure.Icon;
     }
 
     private void OnClickHandler()
     {
         _characterSelector.OnClickHandler(_configure.CharacterType);
+    }
+
+    public void SetOutline(bool isActive)
+    {
+        _outline.SetActive(isActive);
     }
 }

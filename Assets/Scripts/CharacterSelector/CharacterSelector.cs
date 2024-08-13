@@ -7,12 +7,13 @@ using UnityEngine.Events;
 public class CharacterSelector : MonoBehaviour
 {
     [SerializeField] private PlayerBootstrap _playerBootstrap;
-    [SerializeField] private List<CharacterViewConfigure> _configuresButtons = new List<CharacterViewConfigure>();
+    [SerializeField] private List<CharacterViewConfigure> _configures = new List<CharacterViewConfigure>();
     [SerializeField] private CharacterSelectButton _burronPrefab;
     [SerializeField] private Transform _container;
     [SerializeField] private CanvasGroup _canvasGroup;
 
     private List<CharacterSelectButton> _selectButtons = new List<CharacterSelectButton>();
+    private CharacterSelectButton _currentSelectButton;
     private CharacterType _currentSelectCharacter;
 
     public event UnityAction ChangeCharacter;
@@ -41,16 +42,12 @@ public class CharacterSelector : MonoBehaviour
 
     private void FillList()
     {
-        foreach (var configureButtons in _configuresButtons)
+        foreach (var configureButtons in _configures)
         {
             var button = Instantiate(_burronPrefab, _container);
             button.Initialize(configureButtons, this);
+            _selectButtons.Add(button);
         }
-    }
-
-    private void SetCharacter()
-    {
-        _playerBootstrap.SetCharater(_currentSelectCharacter);
     }
 
     private void Update()
@@ -63,7 +60,19 @@ public class CharacterSelector : MonoBehaviour
 
     public void OnClickHandler(CharacterType characterType)
     {
+        if (_currentSelectButton != null)
+            _currentSelectButton.SetOutline(false);
+
         _currentSelectCharacter = characterType;
+
+       foreach (var button in _selectButtons)
+        {
+            if (button.Configure.CharacterType == _currentSelectCharacter)
+            {
+                button.SetOutline(true);
+                _currentSelectButton = button;
+            }
+        }
 
         if (_playerBootstrap.Type != _currentSelectCharacter)
         {

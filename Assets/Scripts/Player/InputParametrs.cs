@@ -24,6 +24,7 @@
     {
         public static string CraftBUTTON = nameof(CraftBUTTON);
         public static string RotateObjectBUTTON = nameof(RotateObjectBUTTON);
+        public static string CraftMenuBUTTON = nameof(CraftMenuBUTTON);
 
         public static class Categoty
         {

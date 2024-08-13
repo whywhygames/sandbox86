@@ -9,7 +9,7 @@ public class DayliTaskCard : MonoBehaviour
     [SerializeField] private TMP_Text _decription;
     [SerializeField] private TMP_Text _counter;
     [SerializeField] private Image _progressImage;
-    [SerializeField] private CanvasGroup _complitedPanel;
+    [SerializeField] private Toggle _toggle;
 
     private DailyTask _task;
 
@@ -24,7 +24,7 @@ public class DayliTaskCard : MonoBehaviour
         _decription.text = _task.Description;
         _counter.text = $"{_task.CurrentCount}/{_task.TargerCount}";
         _progressImage.fillAmount = 0;
-        _complitedPanel.Deactivate();
+        _toggle.isOn = false;
     }
 
     private void OnDisable()
@@ -35,7 +35,7 @@ public class DayliTaskCard : MonoBehaviour
 
     private void OnComlitedCount()
     {
-        _complitedPanel.Activate();
+        _toggle.isOn = true;
     }
 
     private void OnChangedCount(float targerCount, float currentCount)

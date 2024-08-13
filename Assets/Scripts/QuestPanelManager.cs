@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestPanelManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class QuestPanelManager : MonoBehaviour
     [SerializeField] private CanvasGroup _complitedPanel;
     [SerializeField] private CanvasGroup _progressPanel;
     [SerializeField] private TMP_Text _counter;
+    [SerializeField] private TMP_Text _description;
+    [SerializeField] private Image _progressBar;
+    [SerializeField] private Image _icon;
 
     private CanvasGroup _currentOpenPanel;
 
@@ -22,6 +26,8 @@ public class QuestPanelManager : MonoBehaviour
         StartCoroutine(OpenController(_progressPanel));
         _targetQuest.Completed += Complited;
         _targetQuest.ChangedCounter += ChangedCounter;
+        _description.text = _targetQuest.Description;
+        _icon.sprite = _targetQuest.Icon;
     }
 
     public void Setup()
@@ -38,6 +44,7 @@ public class QuestPanelManager : MonoBehaviour
     private void ChangedCounter(float targetCount, float currentCount)
     {
         _counter.text = $"{currentCount} / {targetCount}";
+        _progressBar.fillAmount = (float)currentCount / targetCount;
     }
 
     private void Complited()

@@ -7,6 +7,8 @@ public class Quest : MonoBehaviour
 {
     [field: SerializeField] public string Description { get; set; }
     [field: SerializeField] public float TargerCount { get; set; }
+    [field: SerializeField] public bool Activate { get; set; }
+    [field: SerializeField] public Sprite Icon { get; set; }
 
     [SerializeField] private Quest TargerQuest;
     [SerializeField] private List<TaskReward> _rewards = new List<TaskReward>();
@@ -64,7 +66,10 @@ public class Quest : MonoBehaviour
     private void Start()
     {
         if (TargerQuest != null)
+        {
             TargerQuest.gameObject.SetActive(false);
+            TargerQuest.Activate = false;
+        }
     }
 
     private void OnDisable()
@@ -123,9 +128,13 @@ public class Quest : MonoBehaviour
         IsCompleted = true;
         _rewardGetter.TakeReward(_rewards);
         _complited?.Invoke();
+        Activate = false;
 
         if (TargerQuest != null)
+        {
             TargerQuest.gameObject.SetActive(true);
+            TargerQuest.Activate = true;
+        }
     }
 
     public void AddCounter(float value)

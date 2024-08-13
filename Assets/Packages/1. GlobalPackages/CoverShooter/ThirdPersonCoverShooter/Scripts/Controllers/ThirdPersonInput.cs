@@ -531,39 +531,12 @@ namespace CoverShooter
 
         protected virtual void UpdateWeapons()
         {
-        /*    if (Input.GetKey(KeyCode.Alpha1)) { _motor.InputCancelGrenade(); inputWeapon(0); }
-            if (Input.GetKey(KeyCode.Alpha2)) { _motor.InputCancelGrenade(); inputWeapon(1); }
-            if (Input.GetKey(KeyCode.Alpha3)) { _motor.InputCancelGrenade(); inputWeapon(2); }
-            if (Input.GetKey(KeyCode.Alpha4)) { _motor.InputCancelGrenade(); inputWeapon(3); }
-            if (Input.GetKey(KeyCode.Alpha5)) { _motor.InputCancelGrenade(); inputWeapon(4); }
-            if (Input.GetKey(KeyCode.Alpha6)) { _motor.InputCancelGrenade(); inputWeapon(5); }
-            if (Input.GetKey(KeyCode.Alpha7)) { _motor.InputCancelGrenade(); inputWeapon(6); }
-            if (Input.GetKey(KeyCode.Alpha8)) { _motor.InputCancelGrenade(); inputWeapon(7); }
-            if (Input.GetKey(KeyCode.Alpha9)) { _motor.InputCancelGrenade(); inputWeapon(8); }
-            if (Input.GetKey(KeyCode.Alpha0)) { _motor.InputCancelGrenade(); inputWeapon(9); }*/
-
             if (TCKInput.GetAction(InputParametrs.Weapon1BUTTON, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(0); _isGrenade = false; _controller.ZoomInput = false; } //убрать оружие
             if (TCKInput.GetAction(InputParametrs.Weapon2BUTTON, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(1); _isGrenade = false; _controller.ZoomInput = false; }
             if (TCKInput.GetAction(InputParametrs.Weapon3BUTTON, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(2); _isGrenade = false; _controller.ZoomInput = false; }
             if (TCKInput.GetAction(InputParametrs.Weapon4BUTTON, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(3); _isGrenade = false; _controller.ZoomInput = false; }
             if (TCKInput.GetAction(InputParametrs.Weapon5BUTTON, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(4); _isGrenade = false; _controller.ZoomInput = false; }
             if (TCKInput.GetAction(InputParametrs.Weapon6BUTTON, EActionEvent.Down)) { _motor.InputCancelGrenade(); inputWeapon(5); _isGrenade = false; _controller.ZoomInput = false; }
-     
-
-            /*if (Input.mouseScrollDelta.y < 0)
-            {
-                if (currentWeapon == 0 && _inventory != null)
-                    inputWeapon(_inventory.Weapons.Length);
-                else
-                    inputWeapon(currentWeapon - 1);
-            }
-            else if (Input.mouseScrollDelta.y > 0)
-            {
-                if (_inventory != null && currentWeapon == _inventory.Weapons.Length)
-                    inputWeapon(0);
-                else
-                    inputWeapon(currentWeapon + 1);
-            }*/
 
             if (TCKInput.GetAction(InputParametrs.ChangeWeaponBUTTON, EActionEvent.Down))
             {
@@ -572,13 +545,6 @@ namespace CoverShooter
                 else
                     inputWeapon(currentWeapon + 1);
             }
-            /*else if (Input.mouseScrollDelta.y > 0)
-            {
-                if (_inventory != null && currentWeapon == _inventory.Weapons.Length)
-                    inputWeapon(0);
-                else
-                    inputWeapon(currentWeapon + 1);
-            }*/
         }
 
         private int currentWeapon

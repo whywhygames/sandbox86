@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class QuestManager : MonoBehaviour
         foreach (Quest quest in _quests)
         {
             quest.Started += OnStarted;
+            quest.Completed += OnComplited;
             quest.Initialize(_rewardGetter);
         }
     }
@@ -26,6 +28,15 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    private void OnComplited()
+    {
+        foreach (Quest quest in _quests)
+        {
+            if (quest.Activate == true)
+                quest.gameObject.SetActive(true);
+        }
+    }
+
     public void Setup()
     {
         if (_currentQuest != null)
@@ -35,9 +46,15 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private void OnStarted(Quest quest)
+    private void OnStarted(Quest startedQuest)
     {
-        _questPanelManager.Initialize(quest);
-        _currentQuest = quest;
+        _questPanelManager.Initialize(startedQuest);
+        _currentQuest = startedQuest;
+
+        foreach (Quest quest in _quests)
+        {
+            if (quest != startedQuest)
+                quest.gameObject.SetActive(false);
+        }
     }
 }

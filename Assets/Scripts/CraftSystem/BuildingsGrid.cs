@@ -24,6 +24,8 @@ public class BuildingsGrid : MonoBehaviour
     private RaycastHit _hit;
     private Ray _ray;
 
+    private CraftButton _selectCraftButton;
+
     private List<Building> _poolCreatedObjects = new List<Building>();
 
     public event UnityAction<Building> Craft;
@@ -41,12 +43,20 @@ public class BuildingsGrid : MonoBehaviour
         }
     }
 
-    public void StartPlacingBuilding(CraftType type)
+    public void StartPlacingBuilding(CraftType type, CraftButton button)
     {
         if (_flyingBuilding != null)
         {
             _flyingBuilding.gameObject.SetActive(false);
         }
+
+        if (_selectCraftButton != null)
+        {
+            _selectCraftButton.DisableOutline();
+            _selectCraftButton = null;
+        }
+
+        _selectCraftButton = button;
 
         foreach (var item in _poolCreatedObjects)
         {
