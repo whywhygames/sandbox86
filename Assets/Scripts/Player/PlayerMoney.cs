@@ -8,8 +8,9 @@ public class PlayerMoney : MonoBehaviour
 
     public event UnityAction<int> ChangeMoney;
 
-    private void Start()
+    private void OnEnable()
     {
+        CurrentMoney = 10000;
         ChangeMoney?.Invoke(CurrentMoney);
     }
 
@@ -25,6 +26,24 @@ public class PlayerMoney : MonoBehaviour
     public void AddMonye(int count)
     {
         CurrentMoney += count;
+        ChangeMoney?.Invoke(CurrentMoney);
+    }
+
+    public bool TryBuy(int price)
+    {
+        if (price > CurrentMoney)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void Buy(int price)
+    {
+        CurrentMoney -= price;
         ChangeMoney?.Invoke(CurrentMoney);
     }
 }

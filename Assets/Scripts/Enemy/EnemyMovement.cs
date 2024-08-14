@@ -68,7 +68,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        
         Respawn();
     }
 

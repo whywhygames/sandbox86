@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class CharacterRewardGetter : MonoBehaviour
 {
+    [SerializeField] private List<GunDogMovement> _gunDogMovementList = new List<GunDogMovement>();
     [SerializeField] private PlayerMoney _moneyGetter; 
     [SerializeField] private MineSpawner _mineGetter; 
     [SerializeField] private GrenadeInventoryCounter _grenadeGetter; 
@@ -15,22 +16,22 @@ public class CharacterRewardGetter : MonoBehaviour
 
     public void TakeReward(TaskReward reward)
     {
-        GiveReward(reward);
+        GiveReward(reward.RewardType, reward.Count);
     }
 
     public void TakeReward(List<TaskReward> rewards)
     {
         foreach (TaskReward reward in rewards)
         {
-            GiveReward(reward);
+            GiveReward(reward.RewardType, reward.Count);
         }
     }
 
-    private void GiveReward(TaskReward reward)
+    public void GiveReward(RewardType rewardType, int count)
     {
         UnityAction<int> GetReward = _moneyGetter.AddMonye;
 
-        switch (reward.RewardType)
+        switch (rewardType)
         {
             case RewardType.Money:
                 GetReward = _moneyGetter.AddMonye;
@@ -55,14 +56,29 @@ public class CharacterRewardGetter : MonoBehaviour
             case RewardType.Mine:
                 GetReward = _mineGetter.AddMine;
                 break;
+
+            case RewardType.GunDog:
+                GetGunDog();
+                GetReward = null;
+                break;
         }
 
-        StartCoroutine(AddReward(GetReward, reward.Count));
+        if (GetReward != null)
+            StartCoroutine(AddReward(GetReward, count));
     }
 
     public void GetMoney(int count)
     {
         StartCoroutine(AddReward(_moneyGetter.AddMonye, count));
+    }
+
+    private void GetGunDog()
+    {
+        if (_gunDogMovementList.Count > 0)
+        {
+            _gunDogMovementList[_gunDogMovementList.Count - 1].gameObject.SetActive(true);
+            _gunDogMovementList.RemoveAt(_gunDogMovementList.Count - 1);
+        }
     }
 
     private IEnumerator AddReward(UnityAction<int> GetReward, int count)

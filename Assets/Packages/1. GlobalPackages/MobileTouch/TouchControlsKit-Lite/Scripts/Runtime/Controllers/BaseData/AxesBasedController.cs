@@ -31,7 +31,7 @@ namespace TouchControlsKit
 
     public abstract class AxesBasedController : ControllerBase
     {
-        [Range( 1f, 10f )]
+        [Range( 0.5f, 10f )]
         public float sensitivity = 1f;
 
         [Label( "Lag" )]

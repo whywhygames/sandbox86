@@ -5,5 +5,6 @@
     AzotBlasterBullet,
     SniperBullet,
     Grenade,
-    Mine
+    Mine,
+    GunDog
 }

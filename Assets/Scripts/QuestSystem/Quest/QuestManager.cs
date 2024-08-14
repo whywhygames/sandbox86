@@ -43,6 +43,12 @@ public class QuestManager : MonoBehaviour
         {
             _currentQuest.Setup();
             _questPanelManager.Setup();
+
+            foreach (Quest quest in _quests)
+            {
+                if (quest.Activate == true)
+                    quest.gameObject.SetActive(true);
+            }
         }
     }
 

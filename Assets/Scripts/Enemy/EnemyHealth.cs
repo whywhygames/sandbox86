@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     [Header ("ENEMY TYPE:")]
     [SerializeField] private EnemyType _enemyType;
 
-    [Header ("Parametrs:")]
+    [Header("Parametrs:")]
     [SerializeField] private EnemyMovement _enemyMovement;
     [SerializeField] private CharacterRewardGetter _rewardGetter;
     [SerializeField] private EnemyRespawner _enemyRespawner;
@@ -37,6 +37,7 @@ public class EnemyHealth : MonoBehaviour
     {
        // transform.position = _enemyMovement.GetRandomPoint();
         IsDied = false;
+        _currentHealth = _maxHealth;
         gameObject.SetActive(true);
     }
 
